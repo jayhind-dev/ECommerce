@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32106.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminApi", "AdminApi\AdminApi.csproj", "{935888FB-E95C-49D1-A095-D0D01316E0AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModel", "SharedModel\SharedModel.csproj", "{2BEB77F4-5C6D-4621-9748-694046217D9E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{935888FB-E95C-49D1-A095-D0D01316E0AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{935888FB-E95C-49D1-A095-D0D01316E0AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{935888FB-E95C-49D1-A095-D0D01316E0AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{935888FB-E95C-49D1-A095-D0D01316E0AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BEB77F4-5C6D-4621-9748-694046217D9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BEB77F4-5C6D-4621-9748-694046217D9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BEB77F4-5C6D-4621-9748-694046217D9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BEB77F4-5C6D-4621-9748-694046217D9E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {76BC5373-5BA8-41CA-A33B-2C282E8BAD16}
+	EndGlobalSection
+EndGlobal
