@@ -92,8 +92,8 @@ namespace AdminApi.Controllers
         }
         [Route("api/Category/Update")]
         [HttpPost]
-        public HttpResponseMessage Update(Category category)
-        {
+        public HttpResponseMessage Update(Category category) 
+        { 
             Response response = new Response();
             try
             {
