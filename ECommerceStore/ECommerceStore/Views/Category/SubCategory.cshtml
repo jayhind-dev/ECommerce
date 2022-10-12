@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "SubCategory";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+
+<div class="content-wrapper">
+    <div class="col-sm-12">
+        <div class="page-header">
+            <h3 class="page-title"> Sub Category Update</h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Category</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"> Sub Category </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div class="col-sm-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Add Sub Category</h4>
+                <p class="card-description">fill carefully</p>
+                
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="exampleSelectGender">Category</label>
+                        <select class="form-control  " id="exampleSelectSubCategory" name="selectcat" placeholder="Category" required>
+                            <option>Category_1</option>
+                            <option>Category_2</option>
+                            <option>Category_3</option>
+                            <option>Category_4</option>
+                        </select>
+
+                    </div>
+                    <div class="col">
+                        <label for="exampleInputName1">Sub Category's Name</label>
+                        <input type="text" class="form-control  " id="exampleInputSubCategoryName" name="inputcat" placeholder="Sub Category Name" required>
+                    </div>
+                    
+                    
+                </div>
+                <button type="submit" class="btn btn-primary mr-3"> Submit </button>
+                <button class="btn btn-light">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+

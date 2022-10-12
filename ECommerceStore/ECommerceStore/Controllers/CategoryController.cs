@@ -6,13 +6,12 @@ using System.Web.Mvc;
 
 namespace ECommerceStore.Controllers
 {
-    public class AdminController : Controller
+    public class CategoryController : Controller
     {
-        // GET: Admin
-        public ActionResult Index()
+        // GET: Category
+        public ActionResult SubCategory()
         {
             return View();
         }
-
     }
 }
