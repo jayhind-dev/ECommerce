@@ -86,7 +86,8 @@ namespace AdminApi.Controllers
             catch (Exception ex) { response.status = "Server Erorr"; response.error = ex.Message.ToString(); }
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
-
+        [Route("api/Category/GetAllSubCategories")]
+        [HttpGet]
         public HttpResponseMessage GetAllSubCategories()
         {
             Response response = new Response();
