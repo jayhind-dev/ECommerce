@@ -77,3 +77,5 @@ C:\Users\91911\source\repos\ECommerce\ECommerceStore\ECommerceStore\obj\Debug\EC
 C:\Users\91911\source\repos\ECommerce\ECommerceStore\ECommerceStore\obj\Debug\ECommerceStore.csproj.CopyComplete
 C:\Users\91911\source\repos\ECommerce\ECommerceStore\ECommerceStore\obj\Debug\ECommerceStore.dll
 C:\Users\91911\source\repos\ECommerce\ECommerceStore\ECommerceStore\obj\Debug\ECommerceStore.pdb
+C:\Users\91911\source\repos\ECommerce\ECommerceStore\ECommerceStore\bin\SharedModel.dll
+C:\Users\91911\source\repos\ECommerce\ECommerceStore\ECommerceStore\bin\SharedModel.pdb
