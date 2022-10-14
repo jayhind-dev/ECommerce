@@ -18,6 +18,7 @@ namespace AdminApi.Helper
             Delete =4,
             SelectAllType=5,
             SelectAllSubCategory=6,
+            Edit=7,
 
     }
     enum ProductAction

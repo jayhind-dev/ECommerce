@@ -28,6 +28,21 @@ namespace AdminApi.Reposetries
             return n;
         }
 
+        public Category Edit(int id)
+        {
+            List<Category> lst = new List<Category>();
+            Category category = new Category();
+            SqlParameter[] param = new SqlParameter[]
+            {
+                new SqlParameter("@id",id),
+                new SqlParameter("@Action",CategoryAction.Edit),
+            };
+            DataTable dt = dataAccess.ExecProcDataTable(SPKeys.p_category, param);
+            lst = com.ConvertDataTable<Category>(dt);
+            category = lst.FirstOrDefault();
+            return category;
+        }
+
         public List<Category> GetAllCategories()
         {
             List<Category> lst = new List<Category>();

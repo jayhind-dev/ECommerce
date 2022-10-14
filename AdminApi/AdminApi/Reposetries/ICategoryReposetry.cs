@@ -15,5 +15,6 @@ namespace AdminApi.Reposetries
         bool Update(Category category);
         List<Category> GetAllTypeCategories();
         List<Category> GetAllSubCategories();
+        Category Edit(int id);
     }
 }

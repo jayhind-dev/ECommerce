@@ -192,5 +192,33 @@ namespace AdminApi.Controllers
             return Request.CreateResponse(HttpStatusCode.Created, response);
         }
 
+
+        [Route("api/Category/Edit")]
+        [HttpGet]
+        public HttpResponseMessage Edit(int id)
+        {
+            Category category = new Category();
+            Response response = new Response();
+            try
+            {
+                category = repo.Edit(id);
+                if (category != null)
+                {
+                    response.data = category;
+                    response.status = "ok";
+                }
+                else
+                {
+                    response.status = "No Record Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.status = "Server Error";
+                response.error = ex.Message.ToString();
+            }
+            return Request.CreateResponse(HttpStatusCode.Accepted, response);
+        }
+
     }
 }
