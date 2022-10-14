@@ -122,8 +122,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\SubCategoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -968,11 +968,15 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\AdminMaster.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Product\Products.cshtml" />
+    <Content Include="Views\Product\MainView.cshtml" />
+    <Content Include="Views\SubCategory\MainView.cshtml" />
+    <Content Include="Views\SubCategory\Newform.cshtml" />
+    <Content Include="Views\SubCategory\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Product\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

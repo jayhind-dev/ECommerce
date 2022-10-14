@@ -6,26 +6,20 @@ using System.Web.Mvc;
 
 namespace ECommerceStore.Controllers
 {
-    public class HomeController : Controller
+    public class MainCategoryController : Controller
     {
-        public ActionResult Index()
+        // GET: MainCategory
+        public ActionResult MainView()
         {
             return View();
         }
-
-        public ActionResult About()
+        public ActionResult NewForm()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
-
-        public ActionResult Contact() 
+        public ActionResult List()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
-
     }
 }
