@@ -13,5 +13,7 @@ namespace AdminApi.Reposetries
         List<Category> GetAllCategories();
         bool Delete(int id);
         bool Update(Category category);
+        List<Category> GetAllTypeCategories();
+        List<Category> GetAllSubCategories();
     }
 }
