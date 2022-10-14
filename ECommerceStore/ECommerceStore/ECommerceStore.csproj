@@ -971,11 +971,12 @@
     <Content Include="Views\Product\Products.cshtml" />
     <Content Include="Views\Product\MainView.cshtml" />
     <Content Include="Views\SubCategory\MainView.cshtml" />
+    <Content Include="Views\SubCategory\Newform.cshtml" />
+    <Content Include="Views\SubCategory\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

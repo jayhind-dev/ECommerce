@@ -19,11 +19,6 @@ namespace ECommerceStore.Controllers
             return View();
         }
        
-        [HttpPost]
-        public ActionResult SubCategory(Category cat)
-        {
-            return View();
-        }
 
 
     }
