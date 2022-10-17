@@ -13,7 +13,7 @@ namespace ECommerceStore.Controllers
 {
     public class SubCategoryController : Controller
     {
-        private object dataSream1;
+       
 
         public ActionResult MainView()
         {

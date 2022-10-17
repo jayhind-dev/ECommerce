@@ -836,11 +836,13 @@
     <Content Include="assets\vendors\select2\select2.min.js" />
     <Content Include="assets\vendors\twbs-pagination\jquery.twbsPagination.min.js" />
     <Content Include="assets\vendors\typeahead.js\typeahead.bundle.min.js" />
+    <Content Include="Content\amagiloader.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CustomJS\JavaScript.js" />
+    <Content Include="Content\loader.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -968,11 +970,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\AdminMaster.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Product\Products.cshtml" />
     <Content Include="Views\Product\MainView.cshtml" />
     <Content Include="Views\SubCategory\MainView.cshtml" />
     <Content Include="Views\SubCategory\Newform.cshtml" />
     <Content Include="Views\SubCategory\List.cshtml" />
+    <Content Include="Views\Product\NewForm.cshtml" />
+    <Content Include="Views\Product\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
