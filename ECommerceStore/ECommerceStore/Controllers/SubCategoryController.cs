@@ -45,7 +45,7 @@ namespace ECommerceStore.Controllers
                 string responseText = string.Empty;
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
                 Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
-                if (responseResult.status=="ok")
+                if (responseResult.status)
                 {
                    lst = JsonConvert.DeserializeObject<List<Category>>(responseResult.data.ToString());
                 }
@@ -74,7 +74,7 @@ namespace ECommerceStore.Controllers
                 string responseText = string.Empty;
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
                 Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
-                if (responseResult.status == "ok")
+                if (responseResult.status)
                 {
                     lst = JsonConvert.DeserializeObject<List<Category>>(responseResult.data.ToString());
                 }

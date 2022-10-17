@@ -1,9 +1,11 @@
-﻿
+﻿@using ECommerceStore.Models; 
 @{
     ViewBag.Title = "MainView";
     Layout = "~/Views/Shared/AdminMaster.cshtml";
 }
-
+@{
+    VMopButtons btn = new VMopButtons();
+    btn.EditOn = true;
+    Html.RenderPartial("~/Views/Shared/_OperationButton.cshtml", btn);
+}
 @{ Html.RenderPartial("Newform");}
-
-@{ Html.RenderPartial("List");}
