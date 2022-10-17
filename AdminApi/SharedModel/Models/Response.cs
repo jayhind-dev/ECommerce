@@ -8,7 +8,7 @@ namespace SharedModel.Models
 {
     public class Response
     {
-        public string status { get; set; }
+        public bool status { get; set; }
         public object data { get; set; }
         public string error { get; set; }
     }

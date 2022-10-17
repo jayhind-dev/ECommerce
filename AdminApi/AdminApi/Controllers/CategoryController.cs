@@ -23,18 +23,18 @@ namespace AdminApi.Controllers
                 bool n = repo.SaveCategory(category);
                 if(n)
                 {
-                    response.status = "Data Saved";
+                    response.status = true;
                     response.data = n;
                 }
                 else
                 {
-                    response.status = "Server Error";
+                    response.status = false;
                   
                 }
             }
             catch (Exception ex)
             {
-                response.status = "Server Error";
+                response.status = false;
                 response.error = ex.Message.ToString();
                 Request.CreateResponse(HttpStatusCode.BadRequest, response);
             }
@@ -53,14 +53,14 @@ namespace AdminApi.Controllers
                 if(_categorylist.Count>0)
                 {
                     response.data = _categorylist;
-                    response.status = "ok";
+                    response.status = true;
                 }
                 else
                 {
-                    response.status = "No Record Found";
+                    response.status =false;
                 }
             }
-            catch (Exception ex){response.status = "Server Erorr";response.error = ex.Message.ToString();}
+            catch (Exception ex){response.status = false;response.error = ex.Message.ToString();}
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
@@ -76,14 +76,14 @@ namespace AdminApi.Controllers
                 if (_typelist.Count > 0)
                 {
                     response.data = _typelist;
-                    response.status = "ok";
+                    response.status = true;
                 }
                 else
                 {
-                    response.status = "No Record Found";
+                    response.status =false;
                 }
             }
-            catch (Exception ex) { response.status = "Server Erorr"; response.error = ex.Message.ToString(); }
+            catch (Exception ex) { response.status =false; response.error = ex.Message.ToString(); }
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
         [Route("api/Category/GetAllSubCategories")]
@@ -98,14 +98,14 @@ namespace AdminApi.Controllers
                 if(_subcategorylist.Count>0)
                 {
                     response.data = _subcategorylist;
-                    response.status = "ok";
+                    response.status = true;
                 }
                 else
                 {
-                    response.status = "No Record Found";
+                    response.status = false;
                 }
             }
-            catch (Exception ex) { response.status = "Server Erorr"; response.error = ex.Message.ToString(); }
+            catch (Exception ex) { response.status = false; response.error = ex.Message.ToString(); }
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
@@ -119,18 +119,18 @@ namespace AdminApi.Controllers
                 bool n = repo.Delete(id);
                 if (n)
                 {
-                    response.status = "Data Deleted";
+                    response.status = true;
                     response.data = n;
                 }
                 else
                 {
-                    response.status = "Server Error";
+                    response.status =false;
 
                 }
             }
             catch (Exception ex)
             {
-                response.status = "Server Error";
+                response.status = false;
                 response.error = ex.Message.ToString();
                 Request.CreateResponse(HttpStatusCode.NoContent, response);
             }
@@ -147,18 +147,18 @@ namespace AdminApi.Controllers
                 bool n = repo.Update(category);
                 if (n)
                 {
-                    response.status = "Data Updated";
+                    response.status = true;
                     response.data = n;
                 }
                 else
                 {
-                    response.status = "Server Error";
+                    response.status = false;
 
                 }
             }
             catch (Exception ex)
             {
-                response.status = "Server Error";
+                response.status = false;
                 response.error = ex.Message.ToString();
                 Request.CreateResponse(HttpStatusCode.BadRequest, response);
             }
@@ -176,17 +176,17 @@ namespace AdminApi.Controllers
                 bool n = repo.SaveCategory(category);
                 if (n)
                 {
-                    response.status = "Data Saved";
+                    response.status = true;
                     response.data = n;
                 }
                 else
                 {
-                    response.status = "Server Error";
+                    response.status = false;
                 }
             }
             catch (Exception ex)
             {
-                response.status = "Server Error";
+                response.status = false;
                 response.error = ex.Message.ToString();
                 Request.CreateResponse(HttpStatusCode.BadRequest, response);
             }
@@ -206,16 +206,16 @@ namespace AdminApi.Controllers
                 if (category != null)
                 {
                     response.data = category;
-                    response.status = "ok";
+                    response.status = true;
                 }
                 else
                 {
-                    response.status = "No Record Found";
+                    response.status = false;
                 }
             }
             catch (Exception ex)
             {
-                response.status = "Server Error";
+                response.status = false;
                 response.error = ex.Message.ToString();
             }
             return Request.CreateResponse(HttpStatusCode.Accepted, response);
