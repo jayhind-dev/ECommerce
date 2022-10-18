@@ -941,6 +941,7 @@
     <Content Include="assets\vendors\mdi\fonts\materialdesignicons-webfont.ttf" />
     <Content Include="assets\vendors\mdi\fonts\materialdesignicons-webfont.woff" />
     <Content Include="assets\vendors\mdi\fonts\materialdesignicons-webfont.woff2" />
+    <Content Include="assets\css\imgUpload.scss" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -973,6 +974,7 @@
     <Content Include="Views\SubCategory\MainView.cshtml" />
     <Content Include="Views\SubCategory\Newform.cshtml" />
     <Content Include="Views\SubCategory\List.cshtml" />
+    <Content Include="Views\Product\Imaget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
