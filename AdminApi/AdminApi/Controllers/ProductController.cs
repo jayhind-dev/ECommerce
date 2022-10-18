@@ -26,17 +26,17 @@ namespace AdminApi.Controllers
                 bool n = ProdRepo.SaveProduct(product);
                 if (n)
                 {
-                    response.status = "Data Saved";
+                    response.status = true;
                     response.data = n;
                 }
                 else
                 {
-                    response.status = "Server Error";
+                    response.status = false;
                 }
             }
             catch (Exception ex)
             {
-                response.status = "Server Error";
+                response.status = false;
                 response.error = ex.Message.ToString();
             }
 
@@ -55,14 +55,14 @@ namespace AdminApi.Controllers
                 if (_prolist.Count > 0)
                 {
                     response.data = _prolist;
-                    response.status = "ok";
+                    response.status = true;
                 }
                 else
                 {
-                    response.status = "No Record Found";
+                    response.status = false;
                 }
             }
-            catch (Exception ex) { response.status = "Server Erorr"; response.error = ex.Message.ToString(); }
+            catch (Exception ex) { response.status = false; response.error = ex.Message.ToString(); }
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
@@ -76,18 +76,18 @@ namespace AdminApi.Controllers
                 bool n = ProdRepo.Delete(id);
                 if (n)
                 {
-                    response.status = "Data Deleted";
+                    response.status = true;
                     response.data = n;
                 }
                 else
                 {
-                    response.status = "Server Error";
+                    response.status = false;
 
                 }
             }
             catch (Exception ex)
             {
-                response.status = "Server Error";
+                response.status =false;
                 response.error = ex.Message.ToString();
                 Request.CreateResponse(HttpStatusCode.NoContent, response);
             }
@@ -106,16 +106,16 @@ namespace AdminApi.Controllers
                 if (product != null)
                 {
                     response.data = product;
-                    response.status = "ok";
+                    response.status = true;
                 }
                 else
                 {
-                    response.status = "No Record Found";
+                    response.status =false;
                 }
             }
             catch (Exception ex)
             {
-                response.status = "Server Error";
+                response.status = false;
                 response.error = ex.Message.ToString();
             }
             return Request.CreateResponse(HttpStatusCode.Accepted, response);
@@ -131,18 +131,18 @@ namespace AdminApi.Controllers
                 bool n = ProdRepo.Update(product);
                 if (n)
                 {
-                    response.status = "Data Updated";
+                    response.status = true;
                     response.data = n;
                 }
                 else
                 {
-                    response.status = "Server Error";
+                    response.status = false;
 
                 }
             }
             catch (Exception ex)
             {
-                response.status = "Server Error";
+                response.status = false;
                 response.error = ex.Message.ToString();
                 Request.CreateResponse(HttpStatusCode.BadRequest, response);
             }

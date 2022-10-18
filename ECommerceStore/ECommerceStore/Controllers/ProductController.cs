@@ -13,5 +13,13 @@ namespace ECommerceStore.Controllers
         {
             return View();
         }
+        public ActionResult NewForm()
+        {
+            return View();
+        }
+        public ActionResult List()
+        {
+            return View();
+        }
     }
 }

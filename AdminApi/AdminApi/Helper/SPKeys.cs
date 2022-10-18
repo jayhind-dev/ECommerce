@@ -9,6 +9,7 @@ namespace AdminApi.Helper
     {
         public const  string p_category= "pro_category";
         public const string p_products = "pro_products";
+        public const string p_productsImage = "pro_ProductImages";
     }
     enum CategoryAction
     {
@@ -29,5 +30,13 @@ namespace AdminApi.Helper
         Select=4,
         Edit=5,
 
+    }
+    enum ProductImageAction
+    {
+        Insert=1,
+        SelectProductImage=2,
+        Update=3,
+        Edit=4,
+        Delete=5,
     }
 }
