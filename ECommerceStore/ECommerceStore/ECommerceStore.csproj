@@ -1569,6 +1569,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CustomJS\Category.js" />
     <Content Include="Content\CustomJS\JavaScript.js" />
+    <Content Include="Content\CustomJS\Product.js" />
+    <Content Include="Content\CustomJS\SubCategory.js" />
     <Content Include="Content\loader.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

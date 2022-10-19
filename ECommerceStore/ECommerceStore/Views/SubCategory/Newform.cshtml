@@ -1,74 +1,67 @@
 ﻿@model SharedModel.Models.Category
-
+@using ECommerceStore.Models;
 @{
     ViewBag.Title = "Newform";
-    Layout = "~/Views/Shared/AdminMaster.cshtml";
 }
-<div class="content-wrapper" data-select2-id="9">
-    <div class="page-header">
-        <h3 class="page-title">Sub Category </h3>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page"> Category</li>
-                <li class="breadcrumb-item"><a href="#">Sub Category</a></li>
-            </ol>
-        </nav>
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+        @{
+            GetDDLData ddlCategory = new GetDDLData();
+            List<SelectListItem> lst = ddlCategory.GetCategoryDDl();
+            VMopButtons btn = new VMopButtons();
+            if (Model != null)
+            {
+                btn.EditOn = true;
+            }
+            Html.RenderPartial("~/Views/Shared/_OperationButton.cshtml", btn);
+        }
     </div>
-    <div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Fill Sub Category</h4>
 
-        <div class="col-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Fill Sub Category Form</h4>
+                <form class="forms-sample">
 
-                    <form class="forms-sample">
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleSelectGender">Category :</label>
-                                    <select class="form-control" id="DDlCategory" name="p_id">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Sub Category Name :</label>
-                                    <input type="text" class="form-control" id="category_name" name="category_name" placeholder="Name">
-                                </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleSelectGender">Category :</label>
+                                <select class="form-control" id="DDlCategory" name="@Html.NameFor(m=>m.p_id)" required>
+                                    @{
+                                        foreach (SelectListItem item in lst)
+                                        {
+                                            if (Model != null)
+                                            {
+                                                string select = item.Value == Model.p_id.ToString() ? "Selected=true" : "";
+                                                <option @select value="@item.Value">@item.Text</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        }
+                                    }
+                                </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputName1">Sub Category Name :</label>
+                                @Html.EditorFor(model => model.category_name, new { htmlAttributes = new { @class = "form-control", id = "cf" } })
+                                @Html.ValidationMessageFor(model => model.category_name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
 
-
-                        <button type="submit" class="btn btn-primary mr-2"> Submit </button>
-                        <button class="btn btn-light">Cancel</button>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
-        <div class="loader"></div>
-
-
-
     </div>
+
 </div>
-<script src="~/Scripts/jquery-3.4.1.js"></script>
-<script>
-    $(document).ready(function () {
-        BindCategoryDDl();
-    })
-    function BindCategoryDDl() {
-        $.ajax({
-            url: '/SubCategory/BindCategoryDDl',
-            type: 'POST',
-            success: function (data) {
-                $(data).each(function (i, item) {
-                    $('#DDlCategory').append('<option value="' + item.id + '">' + item.category_name + '</option>');
-                })
-              },
-        error: function () {
-            alert("error");
-        }
-    });
-    }
-</script>
+
+
