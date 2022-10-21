@@ -1,8 +1,39 @@
-﻿
+﻿@using ECommerceStore.Models;
+
 @{
     ViewBag.Title = "MainView";
     Layout = "~/Views/Shared/AdminMaster.cshtml";
 }
+<div class="content-wrapper" data-select2-id="9">
+    <div class="page-header">
+        <h3 class="page-title">Product </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="#"></a> Product</li>
+                <li class="breadcrumb-item " aria-current="page">Product Images</li>
 
-<h2>MainView</h2>
+            </ol>
+        </nav>
+    </div>
+    @{Html.RenderPartial("NewForm"); }
+    @{Html.RenderPartial("List");}
 
+
+
+
+</div>
+<script>
+    AmagiLoader.show();
+    setTimeout(() => {
+        AmagiLoader.hide();
+    }, 3000);
+</script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Content/CustomJS/Product.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#loader').show();
+        BindProductList();
+        $('#loader').hide();
+    })
+</script>

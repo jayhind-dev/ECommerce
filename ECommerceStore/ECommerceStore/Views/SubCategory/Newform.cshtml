@@ -1,82 +1,67 @@
 ﻿@model SharedModel.Models.Category
-
+@using ECommerceStore.Models;
 @{
     ViewBag.Title = "Newform";
 }
-<div class="content-wrapper" data-select2-id="9">
-    <div class="page-header">
-        <h3 class="page-title">Form elements</h3>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Forms</a></li>
-                <li class="breadcrumb-item active" aria-current="page"> Form elements </li>
-            </ol>
-        </nav>
-    </div>
-    <div class="row">
-        <div class="col-md-6 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Typeahead</h4>
-                    <p class="card-description">A simple suggestion engine</p>
-                    <div class="form-group row">
-                        <div class="col">
-                            <label>Basic</label>
-                            <div id="the-basics">
-                               <select id="DDlCategory" class="form-control"></select>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <label>Bloodhound</label>
-                            <div id="bloodhound">
-                                <span class="twitter-typeahead" style="position: relative; display: inline-block;"><input class="typeahead tt-hint" type="text" readonly="" autocomplete="off" spellcheck="false" tabindex="-1" dir="ltr" style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; opacity: 1; background: none 0% 0% / auto repeat scroll padding-box padding-box rgb(255, 255, 255);"><input class="typeahead tt-input" type="text" placeholder="States of USA" autocomplete="off" spellcheck="false" dir="auto" style="position: relative; vertical-align: top; background-color: transparent;"><pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: Rubik, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre><div class="tt-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;"><div class="tt-dataset tt-dataset-states"></div></div></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Typeahead</h4>
-                    <p class="card-description">A simple suggestion engine</p>
-                    <div class="form-group row">
-                        <div class="col">
-                            <label>Basic</label>
-                            <div id="the-basics">
-                                <span class="twitter-typeahead" style="position: relative; display: inline-block;"><input class="typeahead tt-hint" type="text" readonly="" autocomplete="off" spellcheck="false" tabindex="-1" dir="ltr" style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; opacity: 1; background: none 0% 0% / auto repeat scroll padding-box padding-box rgb(255, 255, 255);"><input class="typeahead tt-input" type="text" placeholder="States of USA" autocomplete="off" spellcheck="false" dir="auto" style="position: relative; vertical-align: top; background-color: transparent;"><pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: Rubik, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre><div class="tt-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;"><div class="tt-dataset tt-dataset-states"></div></div></span>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <label>Bloodhound</label>
-                            <div id="bloodhound">
-                                <span class="twitter-typeahead" style="position: relative; display: inline-block;"><input class="typeahead tt-hint" type="text" readonly="" autocomplete="off" spellcheck="false" tabindex="-1" dir="ltr" style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; opacity: 1; background: none 0% 0% / auto repeat scroll padding-box padding-box rgb(255, 255, 255);"><input class="typeahead tt-input" type="text" placeholder="States of USA" autocomplete="off" spellcheck="false" dir="auto" style="position: relative; vertical-align: top; background-color: transparent;"><pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: Rubik, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre><div class="tt-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;"><div class="tt-dataset tt-dataset-states"></div></div></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script src="~/Scripts/jquery-3.4.1.js"></script>
-<script>
-    $(document).ready(function () {
-        BindCategoryDDl();
-    })
-    function BindCategoryDDl() {
-        $.ajax({
-            url: '/SubCategory/BindCategoryDDl',
-            type: 'POST',
-            success: function (data) {
-                $(data).each(function (i, item) {
-                    $('#DDlCategory').append('<option value="' + item.id + '">' + item.category_name + '</option>');
-                })
-              },
-        error: function () {
-            alert("error");
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+        @{
+            GetDDLData ddlCategory = new GetDDLData();
+            List<SelectListItem> lst = ddlCategory.GetCategoryDDl();
+            VMopButtons btn = new VMopButtons();
+            if (Model != null)
+            {
+                btn.EditOn = true;
+            }
+            Html.RenderPartial("~/Views/Shared/_OperationButton.cshtml", btn);
         }
-    });
-    }
-</script>
+    </div>
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Fill Sub Category</h4>
+
+                <form class="forms-sample">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleSelectGender">Category :</label>
+                                <select class="form-control" id="DDlCategory" name="@Html.NameFor(m=>m.p_id)" required>
+                                    @{
+                                        foreach (SelectListItem item in lst)
+                                        {
+                                            if (Model != null)
+                                            {
+                                                string select = item.Value == Model.p_id.ToString() ? "Selected=true" : "";
+                                                <option @select value="@item.Value">@item.Text</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputName1">Sub Category Name :</label>
+                                @Html.EditorFor(model => model.category_name, new { htmlAttributes = new { @class = "form-control", id = "cf" } })
+                                @Html.ValidationMessageFor(model => model.category_name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

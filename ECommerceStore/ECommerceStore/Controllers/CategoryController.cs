@@ -101,6 +101,10 @@ namespace ECommerceStore.Controllers
             List<Category> lst = new List<Category>();
             try
             {
+                System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) =>
+                {
+                    return true;
+                };
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/GeltAllCategories");
                 httpWebRequest.ContentType = "text/json";
                 httpWebRequest.Method = "GET";
@@ -114,7 +118,7 @@ namespace ECommerceStore.Controllers
                 }
 
             }
-            catch { }
+            catch(Exception e) { }
 
             return Json(lst, JsonRequestBehavior.AllowGet);
         }

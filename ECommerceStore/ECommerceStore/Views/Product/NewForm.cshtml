@@ -1,0 +1,210 @@
+﻿@using ECommerceStore.Models;
+@model SharedModel.Models.Product
+
+<div class="col-sm-12">
+    @{
+        GetDDLData ddltype = new GetDDLData();
+        List<SelectListItem> typelist = ddltype.GetTypeDDl();
+        VMopButtons btn = new VMopButtons();
+        if (Model != null)
+        {
+            btn.EditOn = true;
+        }
+        Html.RenderPartial("~/Views/Shared/_OperationButton.cshtml", btn);
+    }
+    @{
+        GetDDLData ddlCategory = new GetDDLData();
+        List<SelectListItem> categorylist = ddlCategory.GetCategoryDDl();
+
+    }
+    @{
+        GetDDLData ddlSubCategory = new GetDDLData();
+        List<SelectListItem> subcategorylist = ddlSubCategory.GetSubCategoryDDl();
+
+    }
+
+
+
+</div>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Add Products</h3>
+            <p class="card-description"></p>
+            @using (Html.BeginForm(new { htmlAttributes = new { id = "Frmproduct" } }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleSelectGender">Product Type :</label>
+                            <select class="form-control" onchange = "typechange();"  id="Pro_Type" name="@Html.NameFor(m => m.Category_id)" required>
+                                @{
+                                    foreach (SelectListItem item in typelist)
+                                    {
+                                        if (Model != null)
+                                        {
+                                            string select = item.Value == Model.Category_id.ToString() ? "Selected=true" : "";
+                                            <option @select value="@item.Value">@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option onchange="typchange()" value="@item.Value">@item.Text</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                            
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName1">Product Category :</label>
+                            <select class="form-control" id="Pro_Category" onchange="categoerychange()" name="@Html.NameFor(m=>m.group_id)" required>
+                                @{
+                                    foreach (SelectListItem item in categorylist)
+                                    {
+                                        if (Model != null)
+                                        {
+                                            string select = item.Value == Model.group_id.ToString() ? "Selected=true" : "";
+                                            <option @select value="@item.Value">@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail3">Child Category : </label>
+                            <select class="form-control" id="Pro_SubCategory" name="@Html.NameFor(m=>m.group_id)" required>
+                                @{
+                                    foreach (SelectListItem item in subcategorylist)
+                                    {
+                                        if (Model != null)
+                                        {
+                                            string select = item.Value == Model.group_id.ToString() ? "Selected=true" : "";
+                                            <option @select value="@item.Value">@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName1">Product Title/Name :</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Product Name">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName1">Taxes Include :</label>
+                            <input type="number" class="form-control" id="tax_id" name="tax_id" placeholder="Taxes Include">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputName1">Product Price :</label>
+                            <input type="number" class="form-control" id="price" name="price" placeholder="Product Price">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputPassword4">Product Description</label>
+                                    <textarea type="text" class="form-control" id="description" name="description" placeholder="Product Description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Product SKU :</label>
+                                    <input type="text" class="form-control" id="sku" name="sku" placeholder="Product SKU">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="exampleInputName1">Unit (kg/pc/lb/ml/g...etc) :</label>
+                                <input type="number" class="form-control" id="stock" name="stock" placeholder="Unit (kg/pc/lb/ml/g...etc)">
+                            </div>
+                        </div>
+                            </div>
+                    </div>
+                 
+                    <div class="col-md-4">
+
+
+
+                        <div class="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6"><label class="block text-sm text-gray-700 dark:text-gray-400 col-span-4 sm:col-span-2 font-medium text-sm">Product Image</label><div class="col-span-8 sm:col-span-4"><div class="w-full text-center"><div class="px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer" role="button" tabindex="0"><input accept="image/*" type="file" autocomplete="off" tabindex="-1" style="display: none;"><span class="mx-auto flex justify-center"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="text-3xl text-green-500" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg></span><p class="text-sm mt-2">Drag your image here</p><em class="text-xs text-gray-400">(Only *.jpeg and *.png images will be accepted)</em></div><aside class="flex flex-row flex-wrap mt-4"></aside></div></div></div>
+
+
+
+                    </div>
+                    </div>
+                            <div class="row">
+                                
+                            </div>
+                            }
+                        </div>
+                    </div>
+    </div>
+<script>
+    function typechange() {
+        var cnge = $('#Pro_Type').val();
+        $.ajax({
+            url: '/Product/BindCategriesbytypeid',
+            type: 'POST',
+            data: { Id: cnge},
+            success: function (data) {
+                $('#Pro_Category').html('');
+                $(data).each(function (i, item) {
+                    $('#Pro_Category').append('<option value="' + item.id + '">' + item.category_name+'</option>');
+                })
+                $('#loader').hide();
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+        
+    }
+    function categoerychange() {
+        var cnge = $('#Pro_Category').val();
+        $.ajax({
+            url: '/Product/BindSubCategriesbytypeid',
+            type: 'POST',
+            data: { Id: cnge },
+            success: function (data) {
+                $('#Pro_SubCategory').html('');
+                $(data).each(function (i, item) {
+                    $('#Pro_SubCategory').append('<option value="' + item.id + '">' + item.category_name + '</option>');
+                })
+                $('#loader').hide();
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+
+</script>

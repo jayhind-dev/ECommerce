@@ -1562,12 +1562,16 @@
     <Content Include="assets\vendors\select2\select2.min.js" />
     <Content Include="assets\vendors\twbs-pagination\jquery.twbsPagination.min.js" />
     <Content Include="assets\vendors\typeahead.js\typeahead.bundle.min.js" />
+    <Content Include="Content\amagiloader.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CustomJS\Category.js" />
     <Content Include="Content\CustomJS\JavaScript.js" />
+    <Content Include="Content\CustomJS\Product.js" />
+    <Content Include="Content\CustomJS\SubCategory.js" />
+    <Content Include="Content\loader.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1763,6 +1767,7 @@
     <Content Include="assets\js\template\assets\vendors\mdi\fonts\materialdesignicons-webfont.woff" />
     <Content Include="assets\js\template\assets\vendors\mdi\fonts\materialdesignicons-webfont.woff2" />
     <Content Include="assets\js\template\package.json" />
+    <Content Include="assets\css\imgUpload.scss" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1790,7 +1795,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\AdminMaster.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Product\Products.cshtml" />
     <Content Include="Views\Product\MainView.cshtml" />
     <Content Include="Views\SubCategory\MainView.cshtml" />
     <Content Include="Views\SubCategory\Newform.cshtml" />

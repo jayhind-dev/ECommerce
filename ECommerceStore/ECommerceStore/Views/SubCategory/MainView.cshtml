@@ -1,11 +1,18 @@
-﻿@using ECommerceStore.Models; 
+﻿@using ECommerceStore.Models;
 @{
     ViewBag.Title = "MainView";
     Layout = "~/Views/Shared/AdminMaster.cshtml";
 }
-@{
-    VMopButtons btn = new VMopButtons();
-    btn.EditOn = true;
-    Html.RenderPartial("~/Views/Shared/_OperationButton.cshtml", btn);
-}
-@{ Html.RenderPartial("Newform");}
+
+<div id="loader">
+    @{ Html.RenderPartial("_loader");}
+</div>
+<div id="DivForm">
+    @{ Html.RenderPartial("Newform");}
+</div>
+
+<div id="DivList">
+    @{ Html.RenderPartial("List");}
+</div>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Content/CustomJS/SubCategory.js"></script>
