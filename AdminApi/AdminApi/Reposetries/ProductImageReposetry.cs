@@ -15,6 +15,19 @@ namespace AdminApi.Reposetries
         DataAccess dataAccess = new DataAccess();
         Common com = new Common();
 
+        public bool Delete(int id)
+        {
+            bool n = false;
+            SqlParameter[] param = new SqlParameter[]
+            {
+                    new SqlParameter("@id",id),
+                    new SqlParameter("@Action",ProductImageAction.Delete),
+            };
+            int res = dataAccess.ExecuteNonQueryProc(SPKeys.p_productsImage, param);
+            n = res > 0 ? true : false;
+            return n;
+        }
+
         public ProductImage Edit(int id)
         {
             List<ProductImage> lst = new List<ProductImage>();
@@ -59,6 +72,28 @@ namespace AdminApi.Reposetries
                     new SqlParameter("@created_by",productImage.created_by),
                     new SqlParameter("@created_date",productImage.created_date),
                     new SqlParameter("@Action",ProductImageAction.Insert),
+            };
+            int res = dataAccess.ExecuteNonQueryProc(SPKeys.p_productsImage, param);
+            n = res > 0 ? true : false;
+            return n;
+        }
+
+        public bool Update(ProductImage productImage)
+        {
+            bool n = false;
+            SqlParameter[] param = new SqlParameter[]
+            {
+                   new SqlParameter("@id",productImage.id),
+                    new SqlParameter("@name",productImage.name),
+                    new SqlParameter("@product_id",productImage.product_id),
+                    new SqlParameter("@order_val",productImage.order_val),
+                    new SqlParameter("@isactive",productImage.isactive),
+                    new SqlParameter("@isdeleted",productImage.isdeleted),
+                    new SqlParameter("@update_by",productImage.update_by),
+                    new SqlParameter("@update_date",productImage.update_date),
+                    new SqlParameter("@created_by",productImage.created_by),
+                    new SqlParameter("@created_date",productImage.created_date),
+                    new SqlParameter("@Action",ProductImageAction.Update),
             };
             int res = dataAccess.ExecuteNonQueryProc(SPKeys.p_productsImage, param);
             n = res > 0 ? true : false;

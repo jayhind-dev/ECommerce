@@ -109,33 +109,6 @@ namespace AdminApi.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
-        [Route("api/Category/Delete")]
-        [HttpPost]
-        public HttpResponseMessage Delete(int id)
-        {
-            Response response = new Response();
-            try
-            {
-                bool n = repo.Delete(id);
-                if (n)
-                {
-                    response.status = true;
-                    response.data = n;
-                }
-                else
-                {
-                    response.status =false;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                response.status = false;
-                response.error = ex.Message.ToString();
-                Request.CreateResponse(HttpStatusCode.NoContent, response);
-            }
-            return Request.CreateResponse(HttpStatusCode.Accepted, response);
-        }
        
         [Route("api/Category/Update")]
         [HttpPost]
@@ -221,5 +194,32 @@ namespace AdminApi.Controllers
             return Request.CreateResponse(HttpStatusCode.Accepted, response);
         }
 
+        [Route("api/Category/Del")]
+        [HttpGet]
+        public HttpResponseMessage Del(int id)
+        {
+            bool n = false;
+            Response response = new Response();
+            try
+            {
+                n = repo.Delete(id);
+                if (n)
+                {
+                    response.data = n;
+                    response.status = true;
+                }
+                else
+                {
+                    response.status = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.status = false;
+                response.error = ex.Message.ToString();
+            }
+            return Request.CreateResponse(HttpStatusCode.Accepted, response);
+        }
+    
     }
 }

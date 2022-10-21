@@ -21,7 +21,11 @@
             @using (Html.BeginForm(new { htmlAttributes = new { id = "FrmCategory" } }))
             {
                 @Html.AntiForgeryToken()
-                <input type="hidden" name="id" id="recodId" />
+                if (Model != null)
+                {
+
+                    <input type="hidden" name="id" id="recodId" value="@Model.id" />
+                }
                 <div class="form-group row">
                     <div class="col">
                         <label>Basic</label>
@@ -57,4 +61,5 @@
         </div>
     </div>
 </div>
+
 

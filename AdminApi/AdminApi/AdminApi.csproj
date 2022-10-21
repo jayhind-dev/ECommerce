@@ -155,10 +155,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AddressController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductImageController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -167,12 +171,20 @@
     <Compile Include="Helper\SPKeys.cs" />
     <Compile Include="Models\Common.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reposetries\AddressReposetry.cs" />
     <Compile Include="Reposetries\CategoryReposetry.cs" />
+    <Compile Include="Reposetries\IAddressReposetry.cs" />
     <Compile Include="Reposetries\ICategoryReposetry.cs" />
+    <Compile Include="Reposetries\ILoginReposetry.cs" />
+    <Compile Include="Reposetries\IOrderReposetry.cs" />
     <Compile Include="Reposetries\IProductImageReposetry.cs" />
     <Compile Include="Reposetries\IProductReposetry.cs" />
+    <Compile Include="Reposetries\IUserReposetries.cs" />
+    <Compile Include="Reposetries\LoginReposetrty.cs" />
+    <Compile Include="Reposetries\OrderReposetry.cs" />
     <Compile Include="Reposetries\ProductImageReposetry.cs" />
     <Compile Include="Reposetries\ProductReposetry.cs" />
+    <Compile Include="Reposetries\UserReposetries.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -228,6 +240,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Products\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

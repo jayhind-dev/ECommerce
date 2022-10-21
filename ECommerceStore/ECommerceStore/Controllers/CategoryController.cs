@@ -32,30 +32,60 @@ namespace ECommerceStore.Controllers
         public JsonResult Save(Category category)
         {
             Response responseToView=new Response();
+           
                  try
             {
-                category.created_by = 2;
-                category.created_date = DateTime.Now;
-                category.isactive = true;
-                category.isdeleted = false;
-                JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
-                serializerSettings.Converters.Add(new DataTableConverter());
-                string jsonString = JsonConvert.SerializeObject(category, Formatting.None, serializerSettings);
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/SaveCategory");
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "POST";
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                { streamWriter.Write(jsonString); streamWriter.Flush(); streamWriter.Close(); }
-                string responseText = string.Empty;
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-                Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
-                if (responseResult.status)
+                if (category.id > 0)
                 {
-                    responseToView.status = true;
-                    responseToView.data = responseResult.data;
+                    category.update_by = 2;
+                    category.update_date = DateTime.Now;
+                    category.isactive = true;
+                    category.isdeleted = false;
+                    JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
+                    serializerSettings.Converters.Add(new DataTableConverter());
+                    string jsonString = JsonConvert.SerializeObject(category, Formatting.None, serializerSettings);
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/Update");
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = "POST";
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    { streamWriter.Write(jsonString); streamWriter.Flush(); streamWriter.Close(); }
+                    string responseText = string.Empty;
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
+                    Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                    if (responseResult.status)
+                    {
+                        responseToView.status = true;
+                        responseToView.data = responseResult.data;
+                    }
+                    else { responseToView.status = false; responseToView.error = responseResult.error; }
                 }
-                else { responseToView.status = false; responseToView.error = responseResult.error; }
+                else
+                {
+                    category.created_by = 2;
+                    category.created_date = DateTime.Now;
+                    category.isactive = true;
+                    category.isdeleted = false;
+                    JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
+                    serializerSettings.Converters.Add(new DataTableConverter());
+                    string jsonString = JsonConvert.SerializeObject(category, Formatting.None, serializerSettings);
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/SaveCategory");
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = "POST";
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    { streamWriter.Write(jsonString); streamWriter.Flush(); streamWriter.Close(); }
+                    string responseText = string.Empty;
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
+                    Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                    if (responseResult.status)
+                    {
+                        responseToView.status = true;
+                        responseToView.data = responseResult.data;
+                    }
+                    else { responseToView.status = false; responseToView.error = responseResult.error; }
+                }
+             
             }
             catch (Exception ex)
             {
@@ -65,7 +95,7 @@ namespace ECommerceStore.Controllers
 
             return Json(responseToView, JsonRequestBehavior.AllowGet); ;
         }
-
+        
         public JsonResult BindCategoryList()
         {
             List<Category> lst = new List<Category>();
@@ -88,14 +118,13 @@ namespace ECommerceStore.Controllers
 
             return Json(lst, JsonRequestBehavior.AllowGet);
         }
-     
+
         public ActionResult BindCategoryById(int Id)
         {
             Category obj = new Category();
             try
             {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/Edit?id="+Id+"");
-                httpWebRequest.ContentType = "text/json";
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/Edit?id=" + Id + "");
                 httpWebRequest.Method = "GET";
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 string responseText = string.Empty;
@@ -111,6 +140,48 @@ namespace ECommerceStore.Controllers
 
             return PartialView("Newform", obj);
         }
-        
+        public ActionResult DelCategoryById(int Id)
+        {
+            Category obj = new Category();
+            try
+            {
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/Del?id=" + Id + "");
+                httpWebRequest.Method = "GET";
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                string responseText = string.Empty;
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
+                Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                if (responseResult.status)
+                {
+                    obj = JsonConvert.DeserializeObject<Category>(responseResult.data.ToString());
+                }
+
+            }
+            catch { }
+
+            return PartialView("Newform", obj);
+        }
+        //public JsonResult DeleteCategory(int Id)
+        //{
+        //    Category obj = new Category();
+        //    try
+        //    {
+
+        //        var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/DeleteCategory?id=" + Id + "");
+        //        httpWebRequest.Method = "POST";
+        //        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+        //        string responseText = string.Empty;
+        //        using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
+        //        Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+        //        if (responseResult.status)
+        //        {
+        //            obj = JsonConvert.DeserializeObject<Category>(responseResult.data.ToString());
+        //        }
+
+        //    }
+        //    catch(Exception ex) { }
+        //    return Json(obj, JsonRequestBehavior.AllowGet);
+        //}
+
     }
 }

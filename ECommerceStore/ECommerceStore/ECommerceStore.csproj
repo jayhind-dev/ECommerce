@@ -1795,11 +1795,11 @@
     <Content Include="Views\SubCategory\MainView.cshtml" />
     <Content Include="Views\SubCategory\Newform.cshtml" />
     <Content Include="Views\SubCategory\List.cshtml" />
+    <Content Include="Views\Shared\_OperationButton.cshtml" />
+    <Content Include="Views\Shared\_loader.cshtml" />
     <Content Include="Views\Category\MainView.cshtml" />
     <Content Include="Views\Category\Newform.cshtml" />
     <Content Include="Views\Category\List.cshtml" />
-    <Content Include="Views\Shared\_OperationButton.cshtml" />
-    <Content Include="Views\Shared\_loader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

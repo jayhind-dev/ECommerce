@@ -102,7 +102,36 @@ namespace AdminApi.Helper
 
         }
 
-     
+        public int ExecProcGetint(string ProName, SqlParameter[] Param)
+        {
+            int num = 0;
+            DataTable dt = new DataTable();
+            try
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand(ProName, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                foreach (SqlParameter prm in Param)
+                {
+                    cmd.Parameters.Add(prm);
+                }
+                SqlDataAdapter adp = new SqlDataAdapter(cmd);
+                adp.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                con.Close();
+            }
+            if(dt.Rows.Count>0)
+            {
+                num = int.Parse(dt.Rows[0]["num"].ToString());
+            }
+            return num;
+        }
 
         public DataTable ExecProcDataTable(string ProName, SqlParameter[] Param)
         {
