@@ -4,8 +4,8 @@
     ViewBag.Title = "MainView";
     Layout = "~/Views/Shared/AdminMaster.cshtml";
 }
-<div class="content-wrapper" data-select2-id="9">
-    <div class="page-header">
+<div class="content-wrapper " data-select2-id="9">
+    <div class="page-header col-12">
         <h3 class="page-title">Product </h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -22,18 +22,6 @@
 
 
 </div>
-<script>
-    AmagiLoader.show();
-    setTimeout(() => {
-        AmagiLoader.hide();
-    }, 3000);
-</script>
+
 <script src="~/Scripts/jquery-3.4.1.js"></script>
-<script src="~/Content/CustomJS/Product.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#loader').show();
-        BindProductList();
-        $('#loader').hide();
-    })
-</script>
+<script src="/Content/CustomJS/Product.js"></script>

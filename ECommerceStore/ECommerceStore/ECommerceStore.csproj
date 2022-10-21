@@ -129,6 +129,7 @@
     </Compile>
     <Compile Include="Models\GetDDLData.cs" />
     <Compile Include="Models\VMopButtons.cs" />
+    <Compile Include="Models\VMProduct.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1799,9 +1800,15 @@
     <Content Include="Views\SubCategory\MainView.cshtml" />
     <Content Include="Views\SubCategory\Newform.cshtml" />
     <Content Include="Views\SubCategory\List.cshtml" />
+    <Content Include="Views\Shared\_loader.cshtml" />
+    <Content Include="Views\Shared\_OperationButton.cshtml" />
+    <Content Include="Views\Product\List.cshtml" />
+    <Content Include="Views\Product\NewForm.cshtml" />
+    <Content Include="Views\Shared\Image_Product.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\ProductImage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

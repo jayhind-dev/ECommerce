@@ -11,12 +11,12 @@
                         <thead>
                             <tr>
                                 <th>Sr.No.</th>
-                                <th>Category</th>
+                                <th>Sub Category</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody id="tblcategorybody">
+                        <tbody id="tblsubcategorybody">
                         </tbody>
                     </table>
                 </div>
@@ -24,12 +24,10 @@
         </div>
     </div>
 </div>
-<script src="~/Scripts/jquery-3.4.1.js"></script>
-<script src="~/Content/CustomJS/Category.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Content/CustomJS/SubCategory.js"></script>
 <script>
     $(document).ready(function () {
-        $('#loader').show();
-        BindCategoryList();
-        $('#loader').hide();
+        BindSubCategoryList();
     })
 </script>

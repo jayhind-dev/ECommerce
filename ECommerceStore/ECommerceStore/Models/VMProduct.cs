@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace SharedModel.Models
+namespace ECommerceStore.Models
 {
-  public class Product
+    public class VMProduct
+
     {
+
         public int id { get; set; }
+        public string imgstring { get; set; }
+        public int Pro_Type { get; set; }
+        public int Pro_Category { get; set; }
+
+        public int Pro_SubCategory { get; set; }
+        public string name { get; set; }
         public int group_id { get; set; }
         public int Category_id { get; set; }
-        
         public int attribute_set_id { get; set; }
-        public string name { get; set; }
+        
         public string description { get; set; }
         public int tax_id { get; set; }
         public decimal price { get; set; }
@@ -26,6 +32,5 @@ namespace SharedModel.Models
         public DateTime? update_date { get; set; }
         public bool? isactive { get; set; }
         public bool? isdeleted { get; set; }
-
     }
 }

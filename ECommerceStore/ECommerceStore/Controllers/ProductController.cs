@@ -30,11 +30,13 @@ namespace ECommerceStore.Controllers
         {
             return View();
         }
-        public JsonResult Save(Product product)
+   
+        public JsonResult Save(VMProduct product)
         {
             Response responseToView = new Response();
             try
             {
+                String[] strArray = product.imgstring.Split(',');
                 product.created_by = 2;
                 product.created_date = DateTime.Now;
                 product.isactive = true;
@@ -114,7 +116,7 @@ namespace ECommerceStore.Controllers
             }
             catch { }
 
-            return PartialView("Newform", obj);
+            return Json(obj, JsonRequestBehavior.AllowGet);
         }
         public JsonResult BindCategriesbytypeid(int Id)
         {
@@ -155,9 +157,35 @@ namespace ECommerceStore.Controllers
             {
                 lst = JsonConvert.DeserializeObject<List<Category>>(responseResult.data.ToString());
             }
-            lst = lst.Where(x => x.p_id == Id).ToList();
+            lst = lst.Where(x => x.Category_id == Id).ToList();
             return Json(lst, JsonRequestBehavior.AllowGet);
         }
-        
+        public ActionResult img()
+        {
+            return View();
+        }
+
+        public JsonResult Upload()
+        {
+            string imgname = "";
+            for (int i = 0; i < Request.Files.Count; i++)
+            {
+                HttpPostedFileBase file = Request.Files[i]; //Uploaded file
+                                                            //Use the following properties to get file's name, size and MIMEType
+                int fileSize = file.ContentLength;
+                string fileName = file.FileName;
+                imgname += file.FileName + ",";
+                string mimeType = file.ContentType;
+                System.IO.Stream fileContent = file.InputStream;
+                //To save file, use SaveAs method
+                string path = Path.Combine(Server.MapPath("~/Content/ProductImage"), fileName);
+                file.SaveAs(path); //File will be saved in application root
+            }
+               
+            return Json(imgname);
+
+          
+        }
     }
+
 }

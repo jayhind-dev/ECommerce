@@ -42,7 +42,7 @@ namespace ECommerceStore.Controllers
                 JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
                 serializerSettings.Converters.Add(new DataTableConverter());
                 string jsonString = JsonConvert.SerializeObject(category, Formatting.None, serializerSettings);
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + " api/Category/SaveCategory");
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/SaveCategory");
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
@@ -76,7 +76,7 @@ namespace ECommerceStore.Controllers
                 {
                     return true;
                 };
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/GeltAllCategories");
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/GetAllSubCategories");
                 httpWebRequest.ContentType = "text/json";
                 httpWebRequest.Method = "GET";
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();

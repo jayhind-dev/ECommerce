@@ -39,7 +39,9 @@ function BindCategoryList() {
     $.ajax({
         url: '/Category/BindCategoryList',
         type: 'POST',
+        
         success: function (data) {
+            $('#tblcategorybody').html('');
             $(data).each(function (i, item) {
                 $('#tblcategorybody').append('<tr><th>' + (i + 1) + '</th><th>' + item.category_name + '</th><th>' + item.isactive + '</th><th><a  onclick="Edit(' + item.id + ')"><label class="badge badge-danger"><i class="mdi mdi-tooltip-edit"></i> Edit</label></a></th></tr>');
             })
