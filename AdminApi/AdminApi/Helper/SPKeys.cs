@@ -10,6 +10,10 @@ namespace AdminApi.Helper
         public const  string p_category= "pro_category";
         public const string p_products = "pro_products";
         public const string p_productsImage = "pro_ProductImages";
+        public const string p_proOrder = "pro_Orders";
+        public const string p_userInfo = "pro_User";
+        public const string p_login = "pro_Login";
+        public const string p_Address = "pro_Address";
     }
     enum CategoryAction
     {
@@ -38,5 +42,38 @@ namespace AdminApi.Helper
         Update=3,
         Edit=4,
         Delete=5,
+    }
+    enum orderAction
+    {
+        Insert=1,
+            ItemInsert=2,
+            OrderStatusUpadte=3,
+            GetOrderDetails=4,
+            CancelOrder=5,
+    }
+
+    enum UserAction
+    {
+        insert = 1,
+        GetAllUserDetails = 2,
+        update = 3,
+        delete = 4,
+        edit = 5
+    }
+    enum LoginAction
+    {
+        insert = 1,
+       GetAllLogin=2,
+       Update=3,
+       Edit=4,
+       delete=5,
+    }
+    enum AddressAction
+    {
+        insert=1,
+            getAllAddress=2,
+            update=3,
+            Edit=4,
+            delete=5,
     }
 }

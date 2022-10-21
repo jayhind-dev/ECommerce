@@ -1,26 +1,25 @@
-﻿using System;
+﻿using AdminApi.Reposetries;
+using SharedModel.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using AdminApi.Models;
-using AdminApi.Reposetries;
-using SharedModel.Models;
 
 namespace AdminApi.Controllers
 {
-    public class ProductImageController : ApiController
+    public class AddressController : ApiController
     {
-        IProductImageReposetry repo = new ProductImageReposetry();
-        [Route("api/ProductImage/SaveProductImage")]
+        IAddressReposetry repo = new AddressReposetry();
+        [Route("api/Address/SaveAddress")]
         [HttpPost]
-        public HttpResponseMessage SaveProductImage(ProductImage productImage)
+        public HttpResponseMessage SaveAddress(Address address)
         {
             Response response = new Response();
             try
             {
-                bool n = repo.SaveProductImage(productImage);
+                bool n = repo.SaveAddress(address);
                 if (n)
                 {
                     response.status = true;
@@ -36,23 +35,23 @@ namespace AdminApi.Controllers
             {
                 response.status = false;
                 response.error = ex.Message.ToString();
+                Request.CreateResponse(HttpStatusCode.BadRequest, response);
             }
             return Request.CreateResponse(HttpStatusCode.Created, response);
         }
 
-
-        [Route("api/ProductImage/GeltAllProductImage")]
+        [Route("api/Address/GeltAllAddress")]
         [HttpGet]
-        public HttpResponseMessage GeltAllProductImage()
+        public HttpResponseMessage GeltAllAddress()
         {
             Response response = new Response();
-            List<ProductImage> _proImagelist = new List<ProductImage>();
+            List<Address> address = new List<Address>();
             try
             {
-                _proImagelist = repo.GeltAllProductImage();
-                if (_proImagelist.Count > 0)
+                address = repo.GetAllCategories();
+                if (address.Count > 0)
                 {
-                    response.data = _proImagelist;
+                    response.data = address;
                     response.status = true;
                 }
                 else
@@ -64,41 +63,14 @@ namespace AdminApi.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
-        [Route("api/ProductImage/Edit")]
-        [HttpGet]
-        public HttpResponseMessage Edit(int id)
-        {
-            ProductImage productImage = new ProductImage();
-            Response response = new Response();
-            try
-            {
-                productImage = repo.Edit(id);
-                if (productImage != null)
-                {
-                    response.data = productImage;
-                    response.status = true;
-                }
-                else
-                {
-                    response.status = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                response.status = false;
-                response.error = ex.Message.ToString();
-            }
-            return Request.CreateResponse(HttpStatusCode.Accepted, response);
-        }
-
-        [Route("api/ProductImage/Update")]
+        [Route("api/Address/Update")]
         [HttpPost]
-        public HttpResponseMessage Update(ProductImage productImage)
+        public HttpResponseMessage Update(Address address)
         {
             Response response = new Response();
             try
             {
-                bool n = repo.Update(productImage);
+                bool n = repo.Update(address);
                 if (n)
                 {
                     response.status = true;
@@ -119,33 +91,63 @@ namespace AdminApi.Controllers
             return Request.CreateResponse(HttpStatusCode.Accepted, response);
         }
 
-        [Route("api/ProductImage/Delete")]
-        [HttpPost]
-        public HttpResponseMessage Delete(int id)
+
+
+        [Route("api/Address/Edit")]
+        [HttpGet]
+        public HttpResponseMessage Edit(int id)
         {
+            Address address = new Address();
             Response response = new Response();
             try
             {
-                bool n = repo.Delete(id);
-                if (n)
+                address = repo.Edit(id);
+                if (address != null)
                 {
+                    response.data = address;
                     response.status = true;
-                    response.data = n;
                 }
                 else
                 {
                     response.status = false;
-
                 }
             }
             catch (Exception ex)
             {
                 response.status = false;
                 response.error = ex.Message.ToString();
-                Request.CreateResponse(HttpStatusCode.NoContent, response);
             }
             return Request.CreateResponse(HttpStatusCode.Accepted, response);
         }
+
+
+        [Route("api/Address/Delete")]
+        [HttpGet]
+        public HttpResponseMessage Delete(int id)
+        {
+            bool n = false;
+            Response response = new Response();
+            try
+            {
+                n = repo.Delete(id);
+                if (n)
+                {
+                    response.data = n;
+                    response.status = true;
+                }
+                else
+                {
+                    response.status = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.status = false;
+                response.error = ex.Message.ToString();
+            }
+            return Request.CreateResponse(HttpStatusCode.Accepted, response);
+        }
+
 
 
     }

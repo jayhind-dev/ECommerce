@@ -12,5 +12,7 @@ namespace AdminApi.Reposetries
         bool SaveProductImage(ProductImage productImage);
         List<ProductImage> GeltAllProductImage();
         ProductImage Edit(int id);
+        bool Update(ProductImage productImage);
+        bool Delete(int id);
     }
 }

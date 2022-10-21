@@ -10,17 +10,17 @@ using SharedModel.Models;
 
 namespace AdminApi.Controllers
 {
-    public class ProductImageController : ApiController
+    public class UserController : ApiController
     {
-        IProductImageReposetry repo = new ProductImageReposetry();
-        [Route("api/ProductImage/SaveProductImage")]
+        IUserReposetries repo = new UserReposetries();
+        [Route("api/User/SaveUserDetails")]
         [HttpPost]
-        public HttpResponseMessage SaveProductImage(ProductImage productImage)
+        public HttpResponseMessage SaveUserDetails(User user)
         {
             Response response = new Response();
             try
             {
-                bool n = repo.SaveProductImage(productImage);
+                bool n = repo.SaveUserDetails(user);
                 if (n)
                 {
                     response.status = true;
@@ -36,23 +36,23 @@ namespace AdminApi.Controllers
             {
                 response.status = false;
                 response.error = ex.Message.ToString();
+                Request.CreateResponse(HttpStatusCode.BadRequest, response);
             }
             return Request.CreateResponse(HttpStatusCode.Created, response);
         }
 
-
-        [Route("api/ProductImage/GeltAllProductImage")]
+        [Route("api/User/GeltAllUserDetails")]
         [HttpGet]
-        public HttpResponseMessage GeltAllProductImage()
+        public HttpResponseMessage GeltAllUserDetails()
         {
             Response response = new Response();
-            List<ProductImage> _proImagelist = new List<ProductImage>();
+            List<User> _userlist = new List<User>();
             try
             {
-                _proImagelist = repo.GeltAllProductImage();
-                if (_proImagelist.Count > 0)
+                _userlist = repo.GeltAllUserDetails();
+                if (_userlist.Count > 0)
                 {
-                    response.data = _proImagelist;
+                    response.data = _userlist;
                     response.status = true;
                 }
                 else
@@ -64,41 +64,14 @@ namespace AdminApi.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
-        [Route("api/ProductImage/Edit")]
-        [HttpGet]
-        public HttpResponseMessage Edit(int id)
-        {
-            ProductImage productImage = new ProductImage();
-            Response response = new Response();
-            try
-            {
-                productImage = repo.Edit(id);
-                if (productImage != null)
-                {
-                    response.data = productImage;
-                    response.status = true;
-                }
-                else
-                {
-                    response.status = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                response.status = false;
-                response.error = ex.Message.ToString();
-            }
-            return Request.CreateResponse(HttpStatusCode.Accepted, response);
-        }
-
-        [Route("api/ProductImage/Update")]
+        [Route("api/User/Update")]
         [HttpPost]
-        public HttpResponseMessage Update(ProductImage productImage)
+        public HttpResponseMessage Update(User user)
         {
             Response response = new Response();
             try
             {
-                bool n = repo.Update(productImage);
+                bool n = repo.Update(user);
                 if (n)
                 {
                     response.status = true;
@@ -119,33 +92,62 @@ namespace AdminApi.Controllers
             return Request.CreateResponse(HttpStatusCode.Accepted, response);
         }
 
-        [Route("api/ProductImage/Delete")]
-        [HttpPost]
-        public HttpResponseMessage Delete(int id)
+
+        [Route("api/User/Edit")]
+        [HttpGet]
+        public HttpResponseMessage Edit(int user_id)
         {
+            User user = new User();
             Response response = new Response();
             try
             {
-                bool n = repo.Delete(id);
-                if (n)
+                user = repo.Edit(user_id);
+                if (user != null)
                 {
+                    response.data = user;
                     response.status = true;
-                    response.data = n;
                 }
                 else
                 {
                     response.status = false;
-
                 }
             }
             catch (Exception ex)
             {
                 response.status = false;
                 response.error = ex.Message.ToString();
-                Request.CreateResponse(HttpStatusCode.NoContent, response);
             }
             return Request.CreateResponse(HttpStatusCode.Accepted, response);
         }
+
+        [Route("api/User/Del")]
+        [HttpGet]
+        public HttpResponseMessage Del(int user_id)
+        {
+            bool n = false;
+            Response response = new Response();
+            try
+            {
+                n = repo.Delete(user_id);
+                if (n)
+                {
+                    response.data = n;
+                    response.status = true;
+                }
+                else
+                {
+                    response.status = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.status = false;
+                response.error = ex.Message.ToString();
+            }
+            return Request.CreateResponse(HttpStatusCode.Accepted, response);
+        }
+
+
 
 
     }

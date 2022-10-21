@@ -9,14 +9,16 @@
         success: function (data) {
             if (data.status) {
                 BindCategoryList();
+                $('#loader').hide();
                 Swal.fire(
                     'Success',
                     'Cataegory Added !',
                     'success'
                 )
-              
+                    
             }
             else {
+                $('#loader').hide();
                 Swal.fire(
                     'Server Error',
                     'Someting Wrong wi',
@@ -25,6 +27,7 @@
             }
         },
         error: function () {
+            $('#loader').hide();
             Swal.fire(
                 'Server Error',
                 'Someting Wrong wi',
@@ -80,4 +83,46 @@ function Edit(id) {
             alert("error");
         }
     });
+}
+
+function Delete() {
+    var id = $("#recodId").val();
+    Swal.fire({
+        title: 'Do you want to Delete the Category?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        denyButtonText: `No`,
+    }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Category/DelCategoryById",
+                data: { Id: id },
+                success: function (customer) {
+                    if (customer != null) {
+                        Swal.fire(
+                            'Success',
+                            'Cataegory Deleted !',
+                            'success'
+                        )
+                    } else {
+                        Swal.fire(
+                            'Category Not Deleted',
+                            'Someting Wrong ',
+                            'error'
+                        )
+                    }
+                }
+            });
+        } else if (result.isDenied) {
+            Swal.fire(
+                'Category Not Deleted',
+                'User Reject Delete request ',
+                'error'
+            )
+        }
+    })
+   
 }

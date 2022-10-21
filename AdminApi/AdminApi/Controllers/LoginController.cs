@@ -1,26 +1,25 @@
-﻿using System;
+﻿using AdminApi.Reposetries;
+using SharedModel.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using AdminApi.Models;
-using AdminApi.Reposetries;
-using SharedModel.Models;
 
 namespace AdminApi.Controllers
 {
-    public class ProductImageController : ApiController
+    public class LoginController : ApiController
     {
-        IProductImageReposetry repo = new ProductImageReposetry();
-        [Route("api/ProductImage/SaveProductImage")]
+        ILoginReposetry repo = new LoginReposetrty();
+        [Route("api/Login/SaveLogin")]
         [HttpPost]
-        public HttpResponseMessage SaveProductImage(ProductImage productImage)
+        public HttpResponseMessage SaveLogin(Login login)
         {
             Response response = new Response();
             try
             {
-                bool n = repo.SaveProductImage(productImage);
+                bool n = repo.SaveLogin(login);
                 if (n)
                 {
                     response.status = true;
@@ -36,23 +35,23 @@ namespace AdminApi.Controllers
             {
                 response.status = false;
                 response.error = ex.Message.ToString();
+                Request.CreateResponse(HttpStatusCode.BadRequest, response);
             }
             return Request.CreateResponse(HttpStatusCode.Created, response);
         }
 
-
-        [Route("api/ProductImage/GeltAllProductImage")]
+        [Route("api/Login/GeltAllLogin")]
         [HttpGet]
-        public HttpResponseMessage GeltAllProductImage()
+        public HttpResponseMessage GeltAllLogin()
         {
             Response response = new Response();
-            List<ProductImage> _proImagelist = new List<ProductImage>();
+            List<Login> _list = new List<Login>();
             try
             {
-                _proImagelist = repo.GeltAllProductImage();
-                if (_proImagelist.Count > 0)
+                _list = repo.GeltAllLogin();
+                if (_list.Count > 0)
                 {
-                    response.data = _proImagelist;
+                    response.data = _list;
                     response.status = true;
                 }
                 else
@@ -64,41 +63,14 @@ namespace AdminApi.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
-        [Route("api/ProductImage/Edit")]
-        [HttpGet]
-        public HttpResponseMessage Edit(int id)
-        {
-            ProductImage productImage = new ProductImage();
-            Response response = new Response();
-            try
-            {
-                productImage = repo.Edit(id);
-                if (productImage != null)
-                {
-                    response.data = productImage;
-                    response.status = true;
-                }
-                else
-                {
-                    response.status = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                response.status = false;
-                response.error = ex.Message.ToString();
-            }
-            return Request.CreateResponse(HttpStatusCode.Accepted, response);
-        }
-
-        [Route("api/ProductImage/Update")]
+        [Route("api/Login/Update")]
         [HttpPost]
-        public HttpResponseMessage Update(ProductImage productImage)
+        public HttpResponseMessage Update(Login login)
         {
             Response response = new Response();
             try
             {
-                bool n = repo.Update(productImage);
+                bool n = repo.Update(login);
                 if (n)
                 {
                     response.status = true;
@@ -119,30 +91,57 @@ namespace AdminApi.Controllers
             return Request.CreateResponse(HttpStatusCode.Accepted, response);
         }
 
-        [Route("api/ProductImage/Delete")]
-        [HttpPost]
-        public HttpResponseMessage Delete(int id)
+
+        [Route("api/Login/Edit")]
+        [HttpGet]
+        public HttpResponseMessage Edit(int id)
         {
+            Login login = new Login();
             Response response = new Response();
             try
             {
-                bool n = repo.Delete(id);
-                if (n)
+                login = repo.Edit(id);
+                if (login != null)
                 {
+                    response.data = login;
                     response.status = true;
-                    response.data = n;
                 }
                 else
                 {
                     response.status = false;
-
                 }
             }
             catch (Exception ex)
             {
                 response.status = false;
                 response.error = ex.Message.ToString();
-                Request.CreateResponse(HttpStatusCode.NoContent, response);
+            }
+            return Request.CreateResponse(HttpStatusCode.Accepted, response);
+        }
+
+        [Route("api/Login/Delet")]
+        [HttpGet]
+        public HttpResponseMessage Delet(int id)
+        {
+            bool n = false;
+            Response response = new Response();
+            try
+            {
+                n = repo.Delete(id);
+                if (n)
+                {
+                    response.data = n;
+                    response.status = true;
+                }
+                else
+                {
+                    response.status = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.status = false;
+                response.error = ex.Message.ToString();
             }
             return Request.CreateResponse(HttpStatusCode.Accepted, response);
         }
