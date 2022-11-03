@@ -23,6 +23,7 @@ namespace AdminApi.Controllers
             Response response = new Response();
             try
             {
+
                 bool n = ProdRepo.SaveProduct(product);
                 if (n)
                 {
@@ -148,5 +149,28 @@ namespace AdminApi.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.Created, response);
         }
-    }
+
+        [Route("api/Product/GetProducts")]
+        [HttpGet]
+        public HttpResponseMessage GetProducts()
+        {
+            Response response = new Response();
+            List<Product> _prolist = new List<Product>();
+            try
+            {
+                _prolist = ProdRepo.GetProducts();
+                if (_prolist.Count > 0)
+                {
+                    response.data = _prolist;
+                    response.status = true;
+                }
+                else
+                {
+                    response.status = false;
+                }
+            }
+            catch (Exception ex) { response.status = false; response.error = ex.Message.ToString(); }
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+        }
+        }
 }
