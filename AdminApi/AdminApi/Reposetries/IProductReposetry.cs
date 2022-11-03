@@ -14,5 +14,6 @@ namespace AdminApi.Reposetries
         bool Delete(int id);
         Product Edit(int id);
         bool Update(Product product);
+        List<Product> GetProducts();
     }
 }

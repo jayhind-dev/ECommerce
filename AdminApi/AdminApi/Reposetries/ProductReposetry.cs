@@ -59,8 +59,31 @@ namespace AdminApi.Reposetries
             return _list;
         }
 
+        public List<Product> GetProducts()
+        {
+            List<Product> _list = new List<Product>();
+            SqlParameter[] param = new SqlParameter[]
+                     {
+                    new SqlParameter("@Action",ProductAction.SeletecTop)
+                     };
+            DataTable dt = dataAccess.ExecProcDataTable(SPKeys.p_products, param);
+            //DataTable to list convertion
+            _list = com.ConvertDataTable<Product>(dt);
+            return _list;
+        }
+
         public bool SaveProduct(Product product)
         {
+            String[] ImgArr= product.Multiimgstring.Split(',');
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Image");
+            if(ImgArr!=null&&ImgArr.Length>0)
+            {
+                foreach(var img in ImgArr)
+                {
+                    dt.Rows.Add(img);
+                }
+            }
             bool n = false;
             SqlParameter[] param = new SqlParameter[]
             {
@@ -78,7 +101,8 @@ namespace AdminApi.Reposetries
                 new SqlParameter("@created_by",product.created_by),
                 new SqlParameter("@created_date",product.created_date),
                 new SqlParameter("@update_by",product.update_by),
-                new SqlParameter("@update_date",product.update_date),
+                new SqlParameter("@SingleIMage",product.Singleimgstring),
+                new SqlParameter("@MultiImgae",dt),
                 new SqlParameter("@Action",ProductAction.Insert),
             };
             int res = dataAccess.ExecuteNonQueryProc(SPKeys.p_products, param);

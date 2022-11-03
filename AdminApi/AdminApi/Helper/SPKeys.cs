@@ -33,6 +33,7 @@ namespace AdminApi.Helper
         Delete=3,
         Select=4,
         Edit=5,
+        SeletecTop=6,
 
     }
     enum ProductImageAction
