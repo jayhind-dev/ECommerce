@@ -14,6 +14,7 @@ namespace AdminApi.Helper
         public const string p_userInfo = "pro_User";
         public const string p_login = "pro_Login";
         public const string p_Address = "pro_Address";
+        public const string p_Banner = "pro_banner";
     }
     enum CategoryAction
     {
@@ -76,5 +77,13 @@ namespace AdminApi.Helper
             update=3,
             Edit=4,
             delete=5,
+    }
+    enum BannerAction
+    {
+        insert = 1,
+        getAllbanner = 2,
+        update = 3,
+        Edit = 4,
+        delete = 5,
     }
 }
