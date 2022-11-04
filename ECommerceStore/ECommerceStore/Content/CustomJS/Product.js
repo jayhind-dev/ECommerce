@@ -3,18 +3,42 @@
 })
 function Save() {
     var imgstring = '';
-    
     $('#loader').show();
-    upmainimage();
-    upmultimage();
-    var formdata = new FormData();
-    formdata = $('form').serialize();
-   
 
+    var formdata = new FormData();
+   
+    //formdata = $('form').serialize();
+    //var fileInput1 = document.getElementById('mailimg');
+    formdata.append("Pro_Type", $("#Pro_Type").val())
+    formdata.append("Pro_Category", $("#Pro_Category").val())
+    formdata.append("Pro_SubCategory", $("#Pro_SubCategory").val())
+    formdata.append("name", $("#name").val())
+    formdata.append("description", $("#description").val())
+    formdata.append("tax_id", $("#tax_id").val())
+    formdata.append("price", $("#price").val())
+    formdata.append("sku", $("#sku").val())
+    formdata.append("stock", $("#stock").val())
+    var fileUpload1 = $("#mailimg").get(0);
+    var files1 = fileUpload1.files[0];
+    console.log(files1)
+    formdata.append("Singleimgstring", files1);
+
+    
+    ////var fileInput = document.getElementById('multiimg');
+    //var fileUpload = $("#multiimg").get(0);
+    //var files = fileUpload.files;
+    ////Iterating through each files selected in fileInput
+    //for (i = 0; i < files.length; i++) {
+    //    //Appending each file to FormData object
+    //    formdata.append("Multiimgstring", files[i]);
+    //}
+  
     $.ajax({
         url: '/Product/Save',
         type: 'POST',
         data: formdata,
+        contentType: false,
+        processData: false,
         success: function (data) {
             if (data.status) {
                 BindProductList();
@@ -52,15 +76,15 @@ function BindProductList() {
             $(data).each(function (i, item) {
                 var tr = '';
                 tr+='<tr>'
-                tr += '<td>' + (i + 1) + '</td>';
-                tr += '<td>' + item.name + '</td>';
-                tr += '<td>' + item.id+'</td>';
-                tr += '<td>' + item.tax_id + '</td>';
-                tr += '<td>' + item.price+'</td>';
-                tr += '<td>' + item.description + '</td>';
-                tr += '<td>' + item.sku + '</td>';
-                tr += '<td>' + item.stock+'</td>';
-                tr += '<th><a onclick="Edit(' + item.id + ')"><label class="badge badge-danger"><i class="mdi mdi-tooltip-edit"></i> Edit</label></a></th>';
+                tr += '<th>' + (i + 1) + '</th>';
+                tr += '<th>' + item.name + '</th>';
+                tr += '<th>' + item.id+'</th>';
+                tr += '<th>' + item.tax_id + '</th>';
+                tr += '<th>' + item.price+'</th>';
+                tr += '<th>' + item.description + '</th>';
+                tr += '<th>' + item.sku + '</th>';
+                tr += '<th>' + item.stock+'</th>';
+                tr += '<th><a onclick="Edit(' + item.id + ')"><label class="badge badge-danger"><i class="mdi mdi-tooltip-edit"></i> Edit </label></a></th>';
                 tr += '</tr>';
                 $('#tblproductbody').append(tr);
             })
@@ -92,10 +116,11 @@ function Edit(id) {
         type: 'POST',
         data: {Id:id},
         success: function (data) {
-            $('#Pro_Category').focus();
+            $('#DivForm').html(data);
+            $('#Pro_Type').focus();
         },
         error: function () {
-            alert("error");
+            alert("error fff");
         }
     });
 }
@@ -184,4 +209,53 @@ function categoerychange() {
         }
     });
     $('#loader').hide();
+}
+
+function Delete() {
+    var id = $("#recodId").val();
+    Swal.fire({
+        title: 'Do you want to Delete the Category?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        denyButtonText: `No`,
+    }).then((result) => {
+        $('#loader').show();
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Product/DelProductById",
+                data: { Id: id },
+                success: function (customer) {
+                    if (customer != null) {
+                        $('#DivForm').html(customer);
+                        BindCategoryList();
+                        $('#loader').hide();
+                        Swal.fire(
+                            'Success',
+                            'Cataegory Deleted !',
+                            'success'
+                        )
+                    } else {
+                        $('#loader').hide();
+                        Swal.fire(
+                            'Category Not Deleted',
+                            'Someting Wrong ',
+                            'error'
+                        )
+                    }
+                }
+            });
+        } else if (result.isDenied) {
+            $('#loader').hide();
+            Swal.fire(
+                'Category Not Deleted',
+                'User Reject Delete request ',
+                'error'
+            )
+        }
+
+    })
+
 }

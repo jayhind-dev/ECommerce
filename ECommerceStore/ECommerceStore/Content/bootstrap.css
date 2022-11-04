@@ -135,9 +135,10 @@ input[type="submit"] {
   -webkit-appearance: button;
   cursor: pointer;
 }
+
 button[disabled],
 html input[disabled] {
-  cursor: default;
+    cursor: default;
 }
 button::-moz-focus-inner,
 input::-moz-focus-inner {

@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Main_View";
+    Layout = "~/Views/Shared/AdminMaster.cshtml";
+}
+
+<div class="content-wrapper " data-select2-id="9">
+    <div class="page-header col-12">
+        <h3 class="page-title">Slider </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="#"></a> Slider</li>
+                <li class="breadcrumb-item " aria-current="page">Slider Images</li>
+
+            </ol>
+        </nav>
+    </div>
+    <div id="DivForm">
+        @{Html.RenderPartial("Form_Slider"); }
+    </div>
+    <div id="DivList">
+    @{Html.RenderPartial("List_Slider");}
+    </div>
+
+
+
+</div>
+

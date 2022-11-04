@@ -15,7 +15,7 @@ namespace ECommerceStore.Controllers
 {
     public class ProductController : Controller
     {
-        private object category;
+       
 
         // GET: Product
         public ActionResult MainView()
@@ -36,7 +36,9 @@ namespace ECommerceStore.Controllers
             Response responseToView = new Response();
             try
             {
-                String[] strArray = product.imgstring.Split(',');
+                
+                product.image=Upload(product.Singleimgstring);
+                product.multiimg=Upload(product.Multiimgstring);
                 product.created_by = 2;
                 product.created_date = DateTime.Now;
                 product.isactive = true;
@@ -96,9 +98,9 @@ namespace ECommerceStore.Controllers
             return Json(lst, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult BindProductById(int Id)
+        public ActionResult BindProductById(int? Id)
         {
-            Product obj = new Product();
+            VMProduct obj = new VMProduct();
             try
             {
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Product/Edit?id=" + Id + "");
@@ -110,13 +112,13 @@ namespace ECommerceStore.Controllers
                 Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
                 if (responseResult.status)
                 {
-                    obj = JsonConvert.DeserializeObject<Product>(responseResult.data.ToString());
+                    obj = JsonConvert.DeserializeObject<VMProduct>(responseResult.data.ToString());
                 }
 
             }
             catch { }
 
-            return Json(obj, JsonRequestBehavior.AllowGet);
+            return PartialView("Newform", obj);
         }
         public JsonResult BindCategriesbytypeid(int Id)
         {
@@ -157,7 +159,7 @@ namespace ECommerceStore.Controllers
             {
                 lst = JsonConvert.DeserializeObject<List<Category>>(responseResult.data.ToString());
             }
-            lst = lst.Where(x => x.Category_id == Id).ToList();
+            lst = lst.Where(x => x.p_id == Id).ToList();
             return Json(lst, JsonRequestBehavior.AllowGet);
         }
         public ActionResult img()
@@ -165,27 +167,61 @@ namespace ECommerceStore.Controllers
             return View();
         }
 
-        public JsonResult Upload()
+        public string Upload(HttpPostedFileBase[] Files)
         {
             string imgname = "";
-            for (int i = 0; i < Request.Files.Count; i++)
+            string FilePath = "";
+            try
             {
-                HttpPostedFileBase file = Request.Files[i]; //Uploaded file
-                                                            //Use the following properties to get file's name, size and MIMEType
-                int fileSize = file.ContentLength;
-                string fileName = file.FileName;
-                imgname += file.FileName + ",";
-                string mimeType = file.ContentType;
-                System.IO.Stream fileContent = file.InputStream;
-                //To save file, use SaveAs method
-                string path = Path.Combine(Server.MapPath("~/Content/ProductImage"), fileName);
-                file.SaveAs(path); //File will be saved in application root
+                for (int i = 0; i < Files.Length; i++)
+                {
+                    HttpPostedFileBase file = Request.Files[i]; //Uploaded file
+                                                                //Use the following properties to get file's name, size and MIMEType
+                    int fileSize = file.ContentLength;
+                    string fileName = file.FileName;
+                    imgname += file.FileName + ",";
+                    string mimeType = file.ContentType;
+                    System.IO.Stream fileContent = file.InputStream;
+                    //To save file, use SaveAs method
+                    string path = Path.Combine(Server.MapPath("~/Content/ProductImage"), fileName);
+                    if (string.IsNullOrEmpty(FilePath))
+                    {
+                        FilePath = "~/Content/ProductImage" + fileName;
+                    }
+                    else
+                    {
+                        FilePath = FilePath + "," + "~/Content/ProductImage" + fileName;
+                    }
+                    file.SaveAs(path); //File will be saved in application root
+                }
             }
-               
-            return Json(imgname);
+            catch(Exception ex) { FilePath = null; }
+            return FilePath;
 
-          
+
         }
+        public ActionResult DelProductById(int Id)
+        {
+            Product obj = new Product();
+            try
+            {
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Product/Delete?id=" + Id + "");
+                httpWebRequest.Method = "GET";
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                string responseText = string.Empty;
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
+                Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                if (responseResult.status)
+                {
+                }
+            }
+            catch { }
+
+            return PartialView("Newform");
+        }
+
+
     }
+    
 
 }

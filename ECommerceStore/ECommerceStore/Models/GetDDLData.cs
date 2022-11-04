@@ -54,7 +54,7 @@ namespace ECommerceStore.Models
         }
         
               public List<SelectListItem> GetCategoryDDl()
-        {
+            {
             // Api for List
 
             List<Category> lst = new List<Category>();

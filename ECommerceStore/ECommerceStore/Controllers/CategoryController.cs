@@ -31,9 +31,9 @@ namespace ECommerceStore.Controllers
         }
         public JsonResult Save(Category category)
         {
-            Response responseToView=new Response();
-           
-                 try
+            Response responseToView = new Response();
+
+            try
             {
                 if (category.id > 0)
                 {
@@ -85,7 +85,7 @@ namespace ECommerceStore.Controllers
                     }
                     else { responseToView.status = false; responseToView.error = responseResult.error; }
                 }
-             
+
             }
             catch (Exception ex)
             {
@@ -95,16 +95,12 @@ namespace ECommerceStore.Controllers
 
             return Json(responseToView, JsonRequestBehavior.AllowGet); ;
         }
-        
+
         public JsonResult BindCategoryList()
         {
             List<Category> lst = new List<Category>();
             try
             {
-                System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) =>
-                {
-                    return true;
-                };
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/GeltAllCategories");
                 httpWebRequest.ContentType = "text/json";
                 httpWebRequest.Method = "GET";
@@ -118,7 +114,7 @@ namespace ECommerceStore.Controllers
                 }
 
             }
-            catch(Exception e) { }
+            catch { }
 
             return Json(lst, JsonRequestBehavior.AllowGet);
         }
@@ -157,35 +153,13 @@ namespace ECommerceStore.Controllers
                 Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
                 if (responseResult.status)
                 {
-                    obj = JsonConvert.DeserializeObject<Category>(responseResult.data.ToString());
                 }
-
             }
             catch { }
 
-            return PartialView("Newform", obj);
+            return PartialView("Newform");
         }
-        //public JsonResult DeleteCategory(int Id)
-        //{
-        //    Category obj = new Category();
-        //    try
-        //    {
-
-        //        var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/DeleteCategory?id=" + Id + "");
-        //        httpWebRequest.Method = "POST";
-        //        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-        //        string responseText = string.Empty;
-        //        using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-        //        Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
-        //        if (responseResult.status)
-        //        {
-        //            obj = JsonConvert.DeserializeObject<Category>(responseResult.data.ToString());
-        //        }
-
-        //    }
-        //    catch(Exception ex) { }
-        //    return Json(obj, JsonRequestBehavior.AllowGet);
-        //}
+      
 
     }
 }

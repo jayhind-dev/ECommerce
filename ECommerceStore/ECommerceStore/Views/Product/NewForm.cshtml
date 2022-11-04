@@ -5,19 +5,18 @@
     @{
         GetDDLData ddltype = new GetDDLData();
         List<SelectListItem> typelist = ddltype.GetTypeDDl();
+
+        GetDDLData ddlCategory = new GetDDLData();
+        List<SelectListItem> categorylist = ddlCategory.GetCategoryDDl();
+
+        GetDDLData ddlSubCategory = new GetDDLData();
+        List<SelectListItem> subcategorylist = ddlSubCategory.GetSubCategoryDDl();
         VMopButtons btn = new VMopButtons();
         if (Model != null)
         {
             btn.EditOn = true;
         }
         Html.RenderPartial("~/Views/Shared/_OperationButton.cshtml", btn);
-  
-        GetDDLData ddlCategory = new GetDDLData();
-        List<SelectListItem> categorylist = ddlCategory.GetCategoryDDl();
-
-   
-        GetDDLData ddlSubCategory = new GetDDLData();
-        List<SelectListItem> subcategorylist = ddlSubCategory.GetSubCategoryDDl();
 
     }
 
@@ -29,7 +28,7 @@
         <div class="card-body">
             <h3 class="card-title">Add Products</h3>
             <p class="card-description"></p>
-            <form method="post" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data" id="FrmProduct">
 
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="@Html.NameFor(m => m.imgstring)" id="imgsulr" />
@@ -60,21 +59,21 @@
                         <div class="form-group">
                             <label for="exampleInputName1">Product Category :</label>
                             <select class="form-control" id="Pro_Category" onchange="categoerychange()" name="@Html.NameFor(m => m.Pro_Category)" required>
-                                <option value="" id="ddlcate">Select Product Category</option>
-                                @*@{
-                                        foreach (SelectListItem item in categorylist)
+                                @*<option value="" id="ddlcate">Select Product Category</option>*@
+                                @{
+                                    foreach (SelectListItem item in categorylist)
+                                    {
+                                        if (Model != null)
                                         {
-                                            if (Model != null)
-                                            {
-                                                string select = item.Value == Model.group_id.ToString() ? "Selected=true" : "";
-                                                <option @select value="@item.Value">@item.Text</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@item.Value">@item.Text</option>
-                                            }
+                                            string select = item.Value == Model.Category_id.ToString() ? "Selected=true" : "";
+                                            <option @select value="@item.Value">@item.Text</option>
                                         }
-                                    }*@
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    }
+                                }
                             </select>
                         </div>
 
@@ -84,20 +83,20 @@
                             <label for="exampleInputEmail3">Sub Category : </label>
                             <select class="form-control" id="Pro_SubCategory" name="@Html.NameFor(m => m.Pro_SubCategory)" required>
                                 <option value="">Select Sub Category</option>
-                                @*@{
-                                        foreach (SelectListItem item in subcategorylist)
+                                @{
+                                    foreach (SelectListItem item in subcategorylist)
+                                    {
+                                        if (Model != null)
                                         {
-                                            if (Model != null)
-                                            {
-                                                string select = item.Value == Model.group_id.ToString() ? "Selected=true" : "";
-                                                <option @select value="@item.Value">@item.Text</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@item.Value">@item.Text</option>
-                                            }
+                                            string select = item.Value == Model.attribute_set_id.ToString() ? "Selected=true" : "";
+                                            <option @select value="@item.Value">@item.Text</option>
                                         }
-                                    }*@
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    }
+                                }
                             </select>
                         </div>
 
@@ -107,45 +106,72 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="exampleInputName1">Product Title/Name :</label>
-                            <input type="text" class="form-control" id="name" name="@Html.NameFor(m => m.name)" placeholder="Product Name">
+                            @*<input type="text" class="form-control" id="name" name="@Html.NameFor(m => m.name)" placeholder="Product Name">*@
+                            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control", id = "name", placeholder = "Product Name" } })
+                            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="exampleInputName1">Taxes Include :</label>
-                            <input type="number" class="form-control" id="tax_id" name="@Html.NameFor(m => m.tax_id)" placeholder="Taxes Include">
+                            @*<input type="number" class="form-control" id="tax_id" name="@Html.NameFor(m => m.tax_id)" placeholder="Taxes Include">*@
+                            @Html.EditorFor(model => model.tax_id, new { htmlAttributes = new { @class = "form-control", id = "tax_id", placeholder = "Taxes Include" } })
+                            @Html.ValidationMessageFor(model => model.tax_id, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="exampleInputName1">Product Price :</label>
-                            <input type="number" class="form-control" id="price" name="@Html.NameFor(m => m.price)" placeholder="Product Price">
+                            @*<input type="number" class="form-control" id="price" name="@Html.NameFor(m => m.price)" placeholder="Product Price">*@
+                            @Html.EditorFor(model => model.price, new { htmlAttributes = new { @class = "form-control", id = "price", placeholder = "Product Price" } })
+                            @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="exampleInputName1">Product SKU :</label>
-                            <input type="text" class="form-control" id="sku" name="@Html.NameFor(m => m.sku)" placeholder="Product SKU">
+                            @*<input type="text" class="form-control" id="sku" name="@Html.NameFor(m => m.sku)" placeholder="Product SKU">*@
+                            @Html.EditorFor(model => model.sku, new { htmlAttributes = new { @class = "form-control", id = "sku", placeholder = "Product SKU" } })
+                            @Html.ValidationMessageFor(model => model.sku, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="form-group">
-                            <label for="exampleInputName1">Product Discription :</label>
-                            <textarea type="text" class="form-control" id="description" name="@Html.NameFor(m => m.description)" placeholder="Product Discription"></textarea>
+                            <label for="exampleInputName1">Product Discription :</label><br />
+                            @*<textarea type="text" class="form-control" id="description" name="@Html.NameFor(m => m.description)" placeholder="Product Discription"></textarea>*@
+                            @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control", id = "description", placeholder = "Product Discription" } })
+                            @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="exampleInputName1">Unit (kg/pc/lb/ml/g...etc) :</label>
-                            <input type="number" class="form-control" id="stock" name="@Html.NameFor(m => m.stock)" placeholder="Unit (kg/pc/lb/ml/g...etc)">
+                            @*<input type="text" class="form-control" id="stock" name="@Html.NameFor(m => m.stock)" placeholder="Unit (kg/pc/lb/ml/g...etc)">*@
+                            @Html.EditorFor(model => model.stock, new { htmlAttributes = new { @class = "form-control", id = "stock", placeholder = "Unit (kg/pc/lb/ml/g...etc)" } })
+                            @Html.ValidationMessageFor(model => model.stock, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    @*<div class="col-md-12">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label>Main_image</label>
+                                <input type="file" id="mailimg" class="file-upload-default" />
+                                <div class="input-group col-xs-12">
+                                    <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
+                                    <span class="input-group-append">
+                                        <button class="file-upload-browse btn btn-primary" type="button"> Upload </button>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>*@
                     @{Html.RenderPartial("Image_Product");}
                 </div>
             </form>
         </div>
 
     </div>
- 
+
 
 </div>

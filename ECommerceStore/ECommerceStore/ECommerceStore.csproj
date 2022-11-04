@@ -1805,8 +1805,6 @@
     <Content Include="Views\Product\List.cshtml" />
     <Content Include="Views\Product\NewForm.cshtml" />
     <Content Include="Views\Shared\Image_Product.cshtml" />
-    <Content Include="Views\Shared\_OperationButton.cshtml" />
-    <Content Include="Views\Shared\_loader.cshtml" />
     <Content Include="Views\Category\MainView.cshtml" />
     <Content Include="Views\Category\Newform.cshtml" />
     <Content Include="Views\Category\List.cshtml" />

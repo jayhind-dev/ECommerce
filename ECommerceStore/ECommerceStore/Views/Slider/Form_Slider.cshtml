@@ -1,0 +1,81 @@
+﻿@using ECommerceStore.Models;
+@model ECommerceStore.Models.VMProduct
+
+<div class="col-sm-12">
+    @{
+        VMopButtons btn = new VMopButtons();
+        if (Model != null)
+        {
+            btn.EditOn = true;
+        }
+        Html.RenderPartial("~/Views/Shared/_OperationButton.cshtml", btn);
+    }
+</div>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Add Slider/Banner</h3>
+            <p class="card-description"></p>
+            <form method="post" id="FrmSlider">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>File upload :</label>
+                            <input type="file" name="img[]" class="file-upload-default">
+                            <div class="input-group col-xs-12">
+                                <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
+                                <span class="input-group-append">
+                                    <button class="file-upload-browse btn btn-primary" type="button"> Upload </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Content :</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Content on Image" ">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Image Type :</label>
+                            <select class="form-control" id="" name="" required="" Placeholder="Select Type">
+                                <option>Slider</option>
+                                <option>Top Banner</option>
+                                <option>Baner</option>
+                                <option>Bottom Banner</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Height :</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Height" >
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Width :</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Width">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Image Order :</label>
+                            <select class="form-control" id="" name="" required="" Placeholder="Select Type">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+</div>
