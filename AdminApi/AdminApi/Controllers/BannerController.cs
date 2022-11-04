@@ -1,135 +1,27 @@
-﻿using AdminApi.Models;
-using AdminApi.Reposetries;
-using SharedModel.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AdminApi.Models;
+using AdminApi.Reposetries;
+using SharedModel.Models;
 
 namespace AdminApi.Controllers
 {
-    public class ProductController : ApiController
+    public class BannerController : ApiController
     {
-        IProductReposetry ProdRepo = new ProductReposetry();
-        Product product = new Product();
-        // GET: Products
-
-        [Route("api/Product/SaveProduct")]
+        IBannerReposetry bannerRepo = new BannerReposetry();
+        // GET: Banner
+        [Route("api/Banner/SaveBanner")]
         [HttpPost]
-        public HttpResponseMessage SaveProduct(Product product)
+        public HttpResponseMessage SaveBanner(banner banner)
         {
             Response response = new Response();
             try
             {
-
-                bool n = ProdRepo.SaveProduct(product);
-                if (n)
-                {
-                    response.status = true;
-                    response.data = n;
-                }
-                else
-                {
-                    response.status = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                response.status = false;
-                response.error = ex.Message.ToString();
-            }
-
-            return Request.CreateResponse(HttpStatusCode.Created, response);
-        }
-
-        [Route("api/Product/GetAllProducts")]
-        [HttpGet]
-        public HttpResponseMessage GetAllProducts()
-        {
-            Response response = new Response();
-            List<Product> _prolist = new List<Product>();
-            try
-            {
-                _prolist = ProdRepo.GetAllProducts();
-                if (_prolist.Count > 0)
-                {
-                    response.data = _prolist;
-                    response.status = true;
-                }
-                else
-                {
-                    response.status = false;
-                }
-            }
-            catch (Exception ex) { response.status = false; response.error = ex.Message.ToString(); }
-            return Request.CreateResponse(HttpStatusCode.OK, response);
-        }
-
-        [Route("api/Product/Delete")]
-        [HttpPost]
-        public HttpResponseMessage Delete(int id)
-        {
-            Response response = new Response();
-            try
-            {
-                bool n = ProdRepo.Delete(id);
-                if (n)
-                {
-                    response.status = true;
-                    response.data = n;
-                }
-                else
-                {
-                    response.status = false;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                response.status =false;
-                response.error = ex.Message.ToString();
-                Request.CreateResponse(HttpStatusCode.NoContent, response);
-            }
-            return Request.CreateResponse(HttpStatusCode.Accepted, response);
-        }
-
-        [Route("api/Product/Edit")]
-        [HttpGet]
-        public HttpResponseMessage Edit(int id)
-        {
-            Product product = new Product(); 
-            Response response = new Response();
-            try
-            {
-                product = ProdRepo.Edit(id);
-                if (product != null)
-                {
-                    response.data = product;
-                    response.status = true;
-                }
-                else
-                {
-                    response.status =false;
-                }
-            }
-            catch (Exception ex)
-            {
-                response.status = false;
-                response.error = ex.Message.ToString();
-            }
-            return Request.CreateResponse(HttpStatusCode.Accepted, response);
-        }
-
-        [Route("api/Product/Update")]
-        [HttpPost]
-        public HttpResponseMessage Update(Product product)
-        {
-            Response response = new Response();
-            try
-            {
-                bool n = ProdRepo.Update(product);
+                bool n = bannerRepo.SaveBanner(banner);
                 if (n)
                 {
                     response.status = true;
@@ -150,18 +42,18 @@ namespace AdminApi.Controllers
             return Request.CreateResponse(HttpStatusCode.Created, response);
         }
 
-        [Route("api/Product/GetProducts")]
+        [Route("api/Banner/GeltAllBanner")]
         [HttpGet]
-        public HttpResponseMessage GetProducts()
+        public HttpResponseMessage GeltAllBanner()
         {
             Response response = new Response();
-            List<Product> _prolist = new List<Product>();
+            List<banner> _bannerlist = new List<banner>();
             try
             {
-                _prolist = ProdRepo.GetProducts();
-                if (_prolist.Count > 0)
+                _bannerlist = bannerRepo.GeltAllBanner();
+                if (_bannerlist.Count > 0)
                 {
-                    response.data = _prolist;
+                    response.data = _bannerlist;
                     response.status = true;
                 }
                 else
@@ -172,5 +64,90 @@ namespace AdminApi.Controllers
             catch (Exception ex) { response.status = false; response.error = ex.Message.ToString(); }
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
+
+        [Route("api/Banner/BannerEdit")]
+        [HttpGet]
+        public HttpResponseMessage BannerEdit(int id)
+        {
+           banner banner = new banner();
+            Response response = new Response();
+            try
+            {
+                banner = bannerRepo.BannerEdit(id);
+                if (banner != null)
+                {
+                    response.data = banner;
+                    response.status = true;
+                }
+                else
+                {
+                    response.status = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.status = false;
+                response.error = ex.Message.ToString();
+            }
+            return Request.CreateResponse(HttpStatusCode.Accepted, response);
         }
+
+        [Route("api/Banner/BannerUpdate")]
+        [HttpPost]
+        public HttpResponseMessage BannerUpdate(banner banner)
+        {
+            Response response = new Response();
+            try
+            {
+                bool n = bannerRepo.BannerUpdate(banner);
+                if (n)
+                {
+                    response.status = true;
+                    response.data = n;
+                }
+                else
+                {
+                    response.status = false;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                response.status = false;
+                response.error = ex.Message.ToString();
+                Request.CreateResponse(HttpStatusCode.BadRequest, response);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.Created, response);
+        }
+
+        [Route("api/Banner/BannerDelete")]
+        [HttpGet]
+        public HttpResponseMessage BannerDelete(int id)
+        {
+            bool n = false;
+            Response response = new Response();
+            try
+            {
+                n = bannerRepo.BannerDelete(id);
+                if (n)
+                {
+                    response.data = n;
+                    response.status = true;
+                }
+                else
+                {
+                    response.status = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.status = false;
+                response.error = ex.Message.ToString();
+            }
+            return Request.CreateResponse(HttpStatusCode.Accepted, response);
+        }
+
+
+    }
 }

@@ -156,6 +156,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AddressController.cs" />
+    <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -172,8 +173,10 @@
     <Compile Include="Models\Common.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reposetries\AddressReposetry.cs" />
+    <Compile Include="Reposetries\BannerReposetry.cs" />
     <Compile Include="Reposetries\CategoryReposetry.cs" />
     <Compile Include="Reposetries\IAddressReposetry.cs" />
+    <Compile Include="Reposetries\IBannerReposetry.cs" />
     <Compile Include="Reposetries\ICategoryReposetry.cs" />
     <Compile Include="Reposetries\ILoginReposetry.cs" />
     <Compile Include="Reposetries\IOrderReposetry.cs" />
@@ -239,6 +242,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Banner\" />
     <Folder Include="Views\Products\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
