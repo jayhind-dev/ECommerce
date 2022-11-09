@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModel", "..\AdminApi\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminApi", "..\AdminApi\AdminApi\AdminApi.csproj", "{935888FB-E95C-49D1-A095-D0D01316E0AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "newdesh", "C:\Users\hp\Downloads\newdesh\newdesh\newdesh.csproj", "{9389E38A-1DBD-4F5B-94B2-43E279D3D6D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{935888FB-E95C-49D1-A095-D0D01316E0AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{935888FB-E95C-49D1-A095-D0D01316E0AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{935888FB-E95C-49D1-A095-D0D01316E0AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9389E38A-1DBD-4F5B-94B2-43E279D3D6D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9389E38A-1DBD-4F5B-94B2-43E279D3D6D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9389E38A-1DBD-4F5B-94B2-43E279D3D6D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9389E38A-1DBD-4F5B-94B2-43E279D3D6D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
