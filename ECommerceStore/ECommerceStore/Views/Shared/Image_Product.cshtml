@@ -1,5 +1,8 @@
 ﻿@using ECommerceStore.Models;
 @model ECommerceStore.Models.VMProduct
+
+
+
 <style>
 
     p {
@@ -22,21 +25,21 @@
     .upload__btn {
         display: inline-block;
         font-weight: 600;
-        color: black;
+        color: #fff;
         text-align: center;
         min-width: 116px;
         padding: 5px;
         transition: all 0.3s ease;
         cursor: pointer;
         border: 2px solid;
-        background-color: #f4f2f0;
-        border-color:black;
+        background-color: #4045ba;
+        border-color: #4045ba;
         border-radius: 10px;
         line-height: 26px;
         font-size: 14px;
     }
 
-    .upload__btn:hover {
+        .upload__btn:hover {
             background-color: unset;
             color: #4045ba;
             transition: all 0.3s ease;
@@ -72,11 +75,11 @@
         cursor: pointer;
     }
 
-    .upload__img-close:after {
+        .upload__img-close:after {
             content: "✖";
             font-size: 14px;
             color: white;
-    }
+        }
 
     .img-bg {
         background-repeat: no-repeat;
@@ -88,29 +91,30 @@
 
     .box-img01 {
         border: 2px dotted #5c40ba4d;
-        background-color: ;
+        background-color: #0000000f;
     }
 </style>
 <div class="col-md-8">
     <div class="form-group">
-        <label>main_image</label>
-        <input type="file" id="mailimg" class="form-control file-upload-info " name="Singleimgstring" />
-       
+        <label>Main_image</label>
+        <input type="file"  class="file-upload-default" id="mailimg" name="Singleimg" />
+        <div class="input-group col-xs-12">
+            <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image" >
+            <span class="input-group-append">
+                <button class="file-upload-browse btn btn-primary" type="button"> Upload </button>
+            </span>
+        </div>
 
     </div>
 </div>
 <div class="col-sm-12 ">
-
-
     <div class="upload__box box-img01">
         <div class="row">
             <div class="col-sm-4">
                 <div class="upload__btn-box">
                     <label class="upload__btn">
-                        <b> product images</b>
-                        <input type="file" multiple="" data-max_length="20" id="multiimg" class="upload__inputfile" name="multiimg">
-                        @Html.EditorFor(model => model.Multiimgstring, new { htmlattributes = new { @class = "upload__inputfile", id = "multiimg", placeholder = "upload image", } })
-                        @Html.ValidationMessageFor(model => model.Multiimgstring, "", new { @class = "text-danger" })
+                        <b> Product images</b>
+                        <input type="file" multiple="" data-max_length="20" id="multiimg" class="upload__inputfile" name="Multiimg">
                     </label>
                 </div>
             </div>
@@ -123,73 +127,67 @@
 
 
 
-<script src="~/scripts/jquery-3.4.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
-    //jquery(document).ready(function () {
-    //    imgupload();
-    //});
-    //$(document).ready(function () {
-    //    imgupload();
-    //})
+    jQuery(document).ready(function () {
+        ImgUpload();
+    });
 
-    //function imgupload() {
-    //    var imgwrap = "";
-    //    var imgarray = [];
-    //    debugger;
-    //    $('.upload__inputfile').each(function () {
-    //        $(this).on('change', function (e) {
-    //            imgwrap = $(this).closest('.upload__box').find('.upload__img-wrap');
-    //            var maxlength = $(this).attr('data-max_length');
-    //            debugger;
-    //            var files = e.target.files;
-    //            var filesarr = Array.prototype.slice.call(files);
-    //            var iterator = 0;
-    //            filesarr.foreach(function (f, index) {
+    function ImgUpload() {
+        var imgWrap = "";
+        var imgArray = [];
 
-    //                if (!f.type.match('image.*')) {
-    //                    return;
-    //                }
-    //                debugger;
+        $('.upload__inputfile').each(function () {
+            $(this).on('change', function (e) {
+                imgWrap = $(this).closest('.upload__box').find('.upload__img-wrap');
+                var maxLength = $(this).attr('data-max_length');
 
-    //                if (imgarray.length > maxlength) {
-    //                    return false
-    //                } else {
-    //                    var len = 0;
-    //                    for (var i = 0; i < imgarray.length; i++) {
-    //                        if (imgarray[i] !== undefined) {
-    //                            len++;
-    //                        }
-    //                    }
-    //                    debugger;
-    //                    if (len > maxlength) {
-    //                        return false;
-    //                    } else {
-    //                        imgarray.push(f);
+                var files = e.target.files;
+                var filesArr = Array.prototype.slice.call(files);
+                var iterator = 0;
+                filesArr.forEach(function (f, index) {
 
-    //                        var reader = new filereader();
-    //                        reader.onload = function (e) {
-    //                            var html = "<div class='upload__img-box'><div style='background-image: url(" + e.target.result + ")' data-number='" + $(".upload__img-close").length + "' data-file='" + f.name + "' class='img-bg'><div class='upload__img-close'></div></div></div>";
-    //                            imgwrap.append(html);
-    //                            iterator++;
-    //                        }
-    //                        reader.readAsDataURL(f);
-    //                        debugger;
-    //                    }
-    //                }
-    //            });
-    //        });
-    //    });
-    //    debugger;
-    //    $('body').on('click', ".upload__img-close", function (e) {
-    //        var file = $(this).parent().data("file");
-    //        for (var i = 0; i < imgarray.length; i++) {
-    //            if (imgarray[i].name === file) {
-    //                imgarray.splice(i, 1);
-    //                break;
-    //            }
-    //        }
-    //        $(this).parent().remove();
-    //    });
-    //}
+                    if (!f.type.match('image.*')) {
+                        return;
+                    }
+
+                    if (imgArray.length > maxLength) {
+                        return false
+                    } else {
+                        var len = 0;
+                        for (var i = 0; i < imgArray.length; i++) {
+                            if (imgArray[i] !== undefined) {
+                                len++;
+                            }
+                        }
+                        if (len > maxLength) {
+                            return false;
+                        } else {
+                            imgArray.push(f);
+
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                var html = "<div class='upload__img-box'><div style='background-image: url(" + e.target.result + ")' data-number='" + $(".upload__img-close").length + "' data-file='" + f.name + "' class='img-bg'><div class='upload__img-close'></div></div></div>";
+                                imgWrap.append(html);
+                                iterator++;
+                            }
+                            reader.readAsDataURL(f);
+                        }
+                    }
+                });
+            });
+        });
+
+        $('body').on('click', ".upload__img-close", function (e) {
+            var file = $(this).parent().data("file");
+            for (var i = 0; i < imgArray.length; i++) {
+                if (imgArray[i].name === file) {
+                    imgArray.splice(i, 1);
+                    break;
+                }
+            }
+            $(this).parent().remove();
+        });
+    }
 </script>
+
+

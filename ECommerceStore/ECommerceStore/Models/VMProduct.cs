@@ -9,8 +9,10 @@ namespace ECommerceStore.Models
     {
         public int id { get; set; }
         public string imgstring { get; set; }
-        public HttpPostedFileBase[] Multiimgstring { get; set; }
-        public HttpPostedFileBase[] Singleimgstring { get; set; }
+        public string Multiimgstring { get; set; }
+        public string Singleimgstring { get; set; }
+        public HttpPostedFileBase[] Multiimg { get; set; }
+        public HttpPostedFileBase[] Singleimg { get; set; }
         public int Pro_Type { get; set; }
         public int Pro_Category { get; set; }
         public int Pro_SubCategory { get; set; }
@@ -23,8 +25,7 @@ namespace ECommerceStore.Models
         public decimal price { get; set; }
         public string sku { get; set; }
         public int stock { get; set; }
-        public string image { get; set; }
-        public string multiimg { get; set; }
+       
         public int created_by { get; set; }
         public int update_by { get; set; }
         public DateTime? created_date { get; set; }

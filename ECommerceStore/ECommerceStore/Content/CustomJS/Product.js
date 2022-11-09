@@ -1,4 +1,6 @@
 ﻿$(document).ready(function () {
+  $('#Pro_Category').empty();
+    $('#Pro_SubCategory').empty();
     BindProductList();
 })
 function Save() {
@@ -9,6 +11,7 @@ function Save() {
    
     //formdata = $('form').serialize();
     //var fileInput1 = document.getElementById('mailimg');
+    formdata.append("id", $("#id").val())
     formdata.append("Pro_Type", $("#Pro_Type").val())
     formdata.append("Pro_Category", $("#Pro_Category").val())
     formdata.append("Pro_SubCategory", $("#Pro_SubCategory").val())
@@ -21,18 +24,17 @@ function Save() {
     var fileUpload1 = $("#mailimg").get(0);
     var files1 = fileUpload1.files[0];
     console.log(files1)
-    formdata.append("Singleimgstring", files1);
+    formdata.append("Singleimg", files1);
 
     
-    ////var fileInput = document.getElementById('multiimg');
-    //var fileUpload = $("#multiimg").get(0);
-    //var files = fileUpload.files;
-    ////Iterating through each files selected in fileInput
-    //for (i = 0; i < files.length; i++) {
-    //    //Appending each file to FormData object
-    //    formdata.append("Multiimgstring", files[i]);
-    //}
-  
+    //var fileInput = document.getElementById('multiimg');
+    var fileUpload = $("#multiimg").get(0);
+    var files = fileUpload.files;
+    //Iterating through each files selected in fileInput
+    for (i = 0; i < files.length; i++) {
+        //Appending each file to FormData object
+        formdata.append("Multiimg", files[i]);
+    }
     $.ajax({
         url: '/Product/Save',
         type: 'POST',
@@ -44,15 +46,17 @@ function Save() {
                 BindProductList();
                 Swal.fire(
                     'Success',
-                    'Cataegory Added !',
+                    'Product Details Added !',
                     'success'
                 )
-              
+                InitialView()
+
+                
             }
             else {
                 Swal.fire(
                     'Server Error',
-                    'Someting Wrong Category Not Added',
+                    'Product Details Not Added',
                     'error'
                 )
             }
@@ -60,7 +64,7 @@ function Save() {
         error: function () {
             Swal.fire(
                 'Server Error',
-                'Someting Wrong wi',
+                'Someting Wrong',
                 'error'
             )
         }
@@ -68,11 +72,13 @@ function Save() {
 }
 
 function BindProductList() {
+    
    
     $.ajax({
         url: '/Product/BindProductList',
         type: 'POST',
         success: function (data) {
+            $('#tblproductbody').html('');
             $(data).each(function (i, item) {
                 var tr = '';
                 tr+='<tr>'
@@ -120,7 +126,7 @@ function Edit(id) {
             $('#Pro_Type').focus();
         },
         error: function () {
-            alert("error fff");
+            alert("Error on Edit");
         }
     });
 }
@@ -208,13 +214,12 @@ function categoerychange() {
             alert("error");
         }
     });
-    $('#loader').hide();
+    $('#loder').hide();
 }
 
-function Delete() {
-    var id = $("#recodId").val();
+function Delete() { var id = $("#id").val();
     Swal.fire({
-        title: 'Do you want to Delete the Category?',
+        title: 'Do you wCategoryhe Produvt Details?',
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: 'Yes',
@@ -230,17 +235,17 @@ function Delete() {
                 success: function (customer) {
                     if (customer != null) {
                         $('#DivForm').html(customer);
-                        BindCategoryList();
+                         BindProductList()
                         $('#loader').hide();
                         Swal.fire(
                             'Success',
-                            'Cataegory Deleted !',
+                            'Product Details Deleted !',
                             'success'
                         )
                     } else {
                         $('#loader').hide();
                         Swal.fire(
-                            'Category Not Deleted',
+                            'Product Not Deleted',
                             'Someting Wrong ',
                             'error'
                         )
@@ -249,13 +254,25 @@ function Delete() {
             });
         } else if (result.isDenied) {
             $('#loader').hide();
-            Swal.fire(
-                'Category Not Deleted',
-                'User Reject Delete request ',
+            Swal.fire(                'Product Not Deleted',
+                'User Rej ect Delete request',
                 'error'
             )
         }
 
     })
 
+}
+
+function InitialView() {
+    $.ajax({
+        url: '/Product/Initialreturn',
+        type: 'POST',
+        success: function (data) {
+            $('#DivForm').html(data);
+        },
+        error: function () {
+            alert("error fff");
+        }
+    });
 }

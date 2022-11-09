@@ -10,7 +10,8 @@ namespace SharedModel.Models
     {
         public int id { get; set; }
         public int p_id { get; set; }
-
+        public string _Type { get; set; }
+        public string type_category { get; set; }
         public string category_name { get; set; }
         public string subcategory_name { get; set; }
         public int created_by { get; set; }

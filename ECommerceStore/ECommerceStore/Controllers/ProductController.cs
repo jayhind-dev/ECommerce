@@ -36,31 +36,90 @@ namespace ECommerceStore.Controllers
             Response responseToView = new Response();
             try
             {
-                
-                product.image=Upload(product.Singleimgstring);
-                product.multiimg=Upload(product.Multiimgstring);
-                product.created_by = 2;
-                product.created_date = DateTime.Now;
-                product.isactive = true;
-                product.isdeleted = false;
-                JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
-                serializerSettings.Converters.Add(new DataTableConverter());
-                string jsonString = JsonConvert.SerializeObject(product, Formatting.None, serializerSettings);
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Product/SaveProduct");
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "POST";
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                { streamWriter.Write(jsonString); streamWriter.Flush(); streamWriter.Close(); }
-                string responseText = string.Empty;
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-                Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
-                if (responseResult.status)
+                ViewBag.product = product;
+            
+                if (product.id > 0)
                 {
-                    responseToView.status = true;
-                    responseToView.data = responseResult.data;
+                    
+
+                    Product productapi = new Product();
+                    productapi.id = product.id;
+                    productapi.group_id = product.group_id;
+                    productapi.Category_id = product.Category_id;
+                    productapi.attribute_set_id = product.attribute_set_id;
+                    productapi.name = product.name;
+                    productapi.description = product.description;
+                    productapi.tax_id = product.tax_id;
+                    productapi.price = product.price;
+                    productapi.sku = product.sku;
+                    productapi.stock = product.stock;
+                    productapi.Multiimgstring = Upload(product.Multiimg);
+                    productapi.Singleimgstring = Upload(product.Singleimg);
+                    productapi.created_by = 2;
+                    productapi.created_date = DateTime.Now;
+                    productapi.isactive = true;
+                    productapi.isdeleted = false;
+                    JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
+                    serializerSettings.Converters.Add(new DataTableConverter());
+                    string jsonString = JsonConvert.SerializeObject(productapi, Formatting.None, serializerSettings);
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Product/Update");
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = "POST";
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    { streamWriter.Write(jsonString); streamWriter.Flush(); streamWriter.Close(); }
+                    string responseText = string.Empty;
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
+                    Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                    if (responseResult.status)
+                    {
+                        responseToView.status = true;
+                        responseToView.data = responseResult.data;
+                    }
+                    else { responseToView.status = false; responseToView.error = responseResult.error; }
+
                 }
-                else { responseToView.status = false; responseToView.error = responseResult.error; }
+                else
+                {
+
+                    Product productapi = new Product();
+                    productapi.id = product.id;
+                    productapi.group_id = product.group_id;
+                    productapi.Category_id = product.Category_id;
+                    productapi.attribute_set_id = product.attribute_set_id;
+                    productapi.name = product.name;
+                    productapi.description = product.description;
+                    productapi.tax_id = product.tax_id;
+                    productapi.price = product.price;
+                    productapi.sku = product.sku;
+                    productapi.stock = product.stock;
+                    productapi.Multiimgstring = Upload(product.Multiimg);
+                    productapi.Singleimgstring = Upload(product.Singleimg);
+                    productapi.created_by = 2;
+                    productapi.created_date = DateTime.Now;
+                    productapi.isactive = true;
+                    productapi.isdeleted = false;
+                    JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
+                    serializerSettings.Converters.Add(new DataTableConverter());
+                    string jsonString = JsonConvert.SerializeObject(productapi, Formatting.None, serializerSettings);
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Product/SaveProduct");
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = "POST";
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    { streamWriter.Write(jsonString); streamWriter.Flush(); streamWriter.Close(); }
+                    string responseText = string.Empty;
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
+                    Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                    if (responseResult.status)
+                    {
+                        responseToView.status = true;
+                        responseToView.data = responseResult.data;
+                    }
+                    else { responseToView.status = false; responseToView.error = responseResult.error; }
+
+                }
+               
             }
             catch (Exception ex)
             {
@@ -68,7 +127,7 @@ namespace ECommerceStore.Controllers
                 responseToView.error = "Server Error";
             }
 
-            return Json(responseToView, JsonRequestBehavior.AllowGet); ;
+            return Json(responseToView, JsonRequestBehavior.AllowGet); 
         }
 
         public JsonResult BindProductList()
@@ -116,7 +175,10 @@ namespace ECommerceStore.Controllers
                 }
 
             }
-            catch { }
+            catch(Exception ex)
+            { 
+            
+            }
 
             return PartialView("Newform", obj);
         }
@@ -215,13 +277,17 @@ namespace ECommerceStore.Controllers
                 {
                 }
             }
-            catch { }
+            catch (Exception ex) { }
 
             return PartialView("Newform");
+        }
+
+        public ActionResult Initialreturn()
+        {
+            return PartialView("NewForm");
         }
 
 
     }
     
-
 }

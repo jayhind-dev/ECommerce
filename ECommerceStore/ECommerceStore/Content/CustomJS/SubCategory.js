@@ -21,7 +21,7 @@
                     'success'
                    
                 )
-                location.reload();
+                InitialViewSubCate()
                 
 
             }
@@ -144,4 +144,17 @@ function Delete() {
 
     })
 
+}
+
+function InitialViewSubCate() {
+    $.ajax({
+        url: '/SubCategory/Initialreturn',
+        type: 'POST',
+        success: function (data) {
+            $('#DivForm').html(data);
+        },
+        error: function () {
+            alert("error fff");
+        }
+    });
 }

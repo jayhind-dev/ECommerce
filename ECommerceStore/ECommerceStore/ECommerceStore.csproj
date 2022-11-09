@@ -123,7 +123,9 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\SliderController.cs" />
     <Compile Include="Controllers\SubCategoryController.cs" />
+    <Compile Include="Controllers\TestingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -441,7 +443,6 @@
     <Content Include="assets\js\template\assets\js\codeEditor.js" />
     <Content Include="assets\js\template\assets\js\codemirror.js" />
     <Content Include="assets\js\template\assets\js\dashboard.js" />
-    <Content Include="assets\js\template\assets\js\file-upload.js" />
     <Content Include="assets\js\template\assets\js\hoverable-collapse.js" />
     <Content Include="assets\js\template\assets\js\misc.js" />
     <Content Include="assets\js\template\assets\js\off-canvas.js" />
@@ -1768,7 +1769,6 @@
     <Content Include="assets\js\template\assets\vendors\mdi\fonts\materialdesignicons-webfont.woff" />
     <Content Include="assets\js\template\assets\vendors\mdi\fonts\materialdesignicons-webfont.woff2" />
     <Content Include="assets\js\template\package.json" />
-    <Content Include="assets\css\imgUpload.scss" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1808,10 +1808,15 @@
     <Content Include="Views\Category\MainView.cshtml" />
     <Content Include="Views\Category\Newform.cshtml" />
     <Content Include="Views\Category\List.cshtml" />
+    <Content Include="Views\Slider\Form_Slider.cshtml" />
+    <Content Include="Views\Slider\Main_View.cshtml" />
+    <Content Include="Views\Slider\List_Slider.cshtml" />
+    <Content Include="Views\Testing\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\ProductImage\" />
+    <Folder Include="Content\Sliderimage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace SharedModel.Models
 {
@@ -10,6 +11,7 @@ namespace SharedModel.Models
     {
         public int id { get; set; }
         public string image { get; set; }
+        public HttpPostedFileBase[] img { get; set; }
         public string content { get; set; }
         public string type { get; set; }
         public int order_type { get; set; }

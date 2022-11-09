@@ -17,7 +17,7 @@
             btn.EditOn = true;
         }
         Html.RenderPartial("~/Views/Shared/_OperationButton.cshtml", btn);
-
+  
     }
 
 
@@ -31,18 +31,21 @@
             <form method="post" enctype="multipart/form-data" id="FrmProduct">
 
                 @Html.AntiForgeryToken()
+                @*<input type="hidden" name="id" value="@Html.Value(m=>m.id)" id="id" />*@
+                @Html.EditorFor(model => model.id, new { htmlAttributes = new { @class = "form-control", id = "id", @type="hidden"} })
                 <input type="hidden" name="@Html.NameFor(m => m.imgstring)" id="imgsulr" />
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="exampleSelectGender">Product Type :</label>
                             <select class="form-control" id="Pro_Type" onchange="typechange()" name="@Html.NameFor(m => m.Pro_Type)" required>
+                                <option>Select Type Product</option>
                                 @{
                                     foreach (SelectListItem item in typelist)
                                     {
                                         if (Model != null)
                                         {
-                                            string select = item.Value == Model.group_id.ToString() ? "Selected=true" : "";
+                                            string select = item.Value == Model.Pro_Type.ToString() ? "Selected=true" : "";
                                             <option @select value="@item.Value">@item.Text</option>
                                         }
                                         else
@@ -59,13 +62,13 @@
                         <div class="form-group">
                             <label for="exampleInputName1">Product Category :</label>
                             <select class="form-control" id="Pro_Category" onchange="categoerychange()" name="@Html.NameFor(m => m.Pro_Category)" required>
-                                @*<option value="" id="ddlcate">Select Product Category</option>*@
+                                <option value="" id="ddlcate">Select Product Category</option>
                                 @{
                                     foreach (SelectListItem item in categorylist)
                                     {
                                         if (Model != null)
                                         {
-                                            string select = item.Value == Model.Category_id.ToString() ? "Selected=true" : "";
+                                            string select = item.Value == Model.Pro_Category.ToString() ? "Selected=true" : "";
                                             <option @select value="@item.Value">@item.Text</option>
                                         }
                                         else
@@ -88,7 +91,7 @@
                                     {
                                         if (Model != null)
                                         {
-                                            string select = item.Value == Model.attribute_set_id.ToString() ? "Selected=true" : "";
+                                            string select = item.Value == Model.Pro_SubCategory.ToString() ? "Selected=true" : "";
                                             <option @select value="@item.Value">@item.Text</option>
                                         }
                                         else
@@ -152,20 +155,20 @@
                         </div>
                     </div>
                     @*<div class="col-md-12">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label>Main_image</label>
-                                <input type="file" id="mailimg" class="file-upload-default" />
-                                <div class="input-group col-xs-12">
-                                    <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
-                                    <span class="input-group-append">
-                                        <button class="file-upload-browse btn btn-primary" type="button"> Upload </button>
-                                    </span>
-                                </div>
-
-                            </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label>Main_image</label>
+                        <input type="file" id="mailimg" class="file-upload-default" />
+                        <div class="input-group col-xs-12">
+                            <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
+                            <span class="input-group-append">
+                                <button class="file-upload-browse btn btn-primary" type="button"> Upload </button>
+                            </span>
                         </div>
-                    </div>*@
+
+                    </div>
+                </div>
+            </div>*@
                     @{Html.RenderPartial("Image_Product");}
                 </div>
             </form>

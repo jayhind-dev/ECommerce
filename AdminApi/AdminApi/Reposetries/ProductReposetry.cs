@@ -76,7 +76,7 @@ namespace AdminApi.Reposetries
         {
             String[] ImgArr= product.Multiimgstring.Split(',');
             DataTable dt = new DataTable();
-            dt.Columns.Add("Image");
+            dt.Columns.Add("image_name");
             if(ImgArr!=null&&ImgArr.Length>0)
             {
                 foreach(var img in ImgArr)
@@ -87,7 +87,6 @@ namespace AdminApi.Reposetries
             bool n = false;
             SqlParameter[] param = new SqlParameter[]
             {
-                new SqlParameter("@id",product.id),
                 new SqlParameter("@name",product.name),
                 new SqlParameter("@group_id",product.group_id),
                 new SqlParameter("@description",product.description),

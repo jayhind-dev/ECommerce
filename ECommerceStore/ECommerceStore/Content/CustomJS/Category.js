@@ -8,9 +8,6 @@
         data: formdata,
         success: function (data) {
             if (data.status) {
-                $("#ddltype").val('');
-                $("#cf").val('');
-              /*  $('#DivForm').html('');*/
                 BindCategoryList();
                 $('#loader').hide();
                 Swal.fire(
@@ -18,7 +15,7 @@
                     'Cataegory Added !',
                     'success'
                 )
-                location.reload();
+                InitialViewCat()
 
             }
             else {
@@ -66,7 +63,7 @@ function Edit(id) {
         data: { Id: id },
         success: function (data) {
             $('#DivForm').html(data);
-         /*   $('#ddltype').focus();*/
+            $('#ddltype').focus();
         },
         error: function () {
             alert("error");
@@ -121,4 +118,17 @@ function Delete() {
 
     })
 
+}
+
+function InitialViewCat() {
+    $.ajax({
+        url: '/Category/Initialreturn',
+        type: 'POST',
+        success: function (data) {
+            $('#DivForm').html(data);
+        },
+        error: function () {
+            alert("error fff");
+        }
+    });
 }

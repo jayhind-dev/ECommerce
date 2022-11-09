@@ -1,81 +1,253 @@
 ﻿@using ECommerceStore.Models;
-@model ECommerceStore.Models.VMProduct
+@model SharedModel.Models.banner
 
 <div class="col-sm-12">
     @{
+        List<SelectListItem> lst = new List<SelectListItem>
+                            {
+                                    new SelectListItem{ Text="Slider", Value = "1" },
+                                    new SelectListItem{ Text="Top Banner", Value = "2" },
+                                    new SelectListItem{ Text="Middle Banner", Value = "3" },
+                                    new SelectListItem{ Text="Bottom Banner", Value = "4" },
+            };
+        List<SelectListItem> lst02 = new List<SelectListItem>
+                            {
+                                    new SelectListItem{ Text="1", Value = "l1" },
+                                    new SelectListItem{ Text="2", Value = "l2" },
+                                    new SelectListItem{ Text="3", Value = "l3" },
+                                    new SelectListItem{ Text="4", Value = "l4" },
+            };
+
         VMopButtons btn = new VMopButtons();
         if (Model != null)
         {
             btn.EditOn = true;
         }
         Html.RenderPartial("~/Views/Shared/_OperationButton.cshtml", btn);
-    }
+        }
 </div>
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
             <h3 class="card-title">Add Slider/Banner</h3>
             <p class="card-description"></p>
-            <form method="post" id="FrmSlider">
+            @*<form id="FrmSlider" method="post" enctype="multipart/form-data">*@
+
+
+            @using (Html.BeginForm(new { htmlAttributes = new { id = "FrmSlider" } }))
+            {
+                @Html.AntiForgeryToken()
+                if (Model != null)
+
+                {
+                    <input type="hidden" name="id" id="id" />
+
+
+                }
+
+                <input type="hidden" name="image" id="image" />
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>File upload :</label>
-                            <input type="file" name="img[]" class="file-upload-default">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>File upload :</label>
+                        <input type="file" name="img" class="file-upload-default" id="imgsld">
+                        <span class="input-group-append">
                             <div class="input-group col-xs-12">
                                 <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
-                                <span class="input-group-append">
-                                    <button class="file-upload-browse btn btn-primary" type="button"> Upload </button>
-                                </span>
+                                <button class="file-upload-browse btn btn-primary" type="button"> Upload </button>
                             </div>
-                        </div>
+                        </span>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Content :</label>
-                            <input type="text" class="form-control form-control-sm" placeholder="Content on Image" ">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Image Type :</label>
-                            <select class="form-control" id="" name="" required="" Placeholder="Select Type">
-                                <option>Slider</option>
-                                <option>Top Banner</option>
-                                <option>Baner</option>
-                                <option>Bottom Banner</option>
-
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Height :</label>
-                            <input type="text" class="form-control form-control-sm" placeholder="Height" >
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Width :</label>
-                            <input type="text" class="form-control form-control-sm" placeholder="Width">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Image Order :</label>
-                            <select class="form-control" id="" name="" required="" Placeholder="Select Type">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </select>
-                        </div>
-                    </div>
-
                 </div>
-            </form>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Content :</label>
+                        @*<input type="text" class="form-control form-control-sm" placeholder="Content on Image" id="content" name="content">*@
+                        @Html.EditorFor(model => model.content, new { htmlAttributes = new { @class = "form-control form-control-sm", id = "content", } })
+                        @Html.ValidationMessageFor(model => model.img, "", new { @class = "text-danger" })
+                       
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Image Type :</label>
+                        @*<select class="form-control" id="type" name="type" required="" Placeholder="Select Type">
+                        <option>Slider</option>
+                        <option>Top Banner</option>
+                        <option>Baner</option>
+                        <option>Bottom Banner</option>
+
+                    </select>*@
+
+                        <select id="type" class="form-control" name="@Html.NameFor(m => m.type)" Placeholder="Select Type">
+
+                            @{
+                                foreach (SelectListItem item in lst)
+                                {
+                                    if (Model != null)
+                                    {
+                                        string select = item.Value == Model.id.ToString() ? "Selected=true" : "";
+                                        <option @select value="@item.Value">@item.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                </div>
+                <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Height :</label>
+                        @*<input type="text" class="form-control form-control-sm" placeholder="Height" id="height" name="hiegth">*@
+                        @Html.EditorFor(model => model.hiegth, new { htmlAttributes = new { @class = "form-control form-control-sm", id = "height", } })
+                        @Html.ValidationMessageFor(model => model.hiegth, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Width :</label>
+                        @*<input type="text" class="form-control form-control-sm" placeholder="Width" id="width" name="Width">*@
+                        @Html.EditorFor(model => model.width, new { htmlAttributes = new { @class = "form-control form-control-sm", id = "width", } })
+                        @Html.ValidationMessageFor(model => model.width, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Image Order :</label>
+                        @*<select class="form-control" id="order" name="order_type" required="" Placeholder="Select Order">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>*@
+                        <select id="order" class="form-control" name="@Html.NameFor(m => m.order_type)" Placeholder="Select Order">
+
+                            @{
+                                foreach (SelectListItem item in lst02)
+                                {
+                                    if (Model != null)
+                                    {
+                                        string select = item.Value == Model.id.ToString() ? "Selected=true" : "";
+                                        <option @select value="@item.Value">@item.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                </div>
+            }
         </div>
-
-    </div>
-
-
 </div>
+</div>
+
+
+
+<script>
+    function Save() {
+        var formdata = new FormData();
+        formdata.append("id", $("#id").val())
+        formdata.append("content", $("#content").val())
+        formdata.append("type", $("#type").val())
+        formdata.append("hiegth", $("#height").val())
+        formdata.append("width", $("#width").val())
+        formdata.append("order_type", $("#order").val())
+        var fileUpload1 = $("#imgsld").get(0);
+        var files1 = fileUpload1.files[0];
+        console.log(files1)
+        formdata.append("img", files1);
+        $.ajax({
+            url: '/Slider/Save',
+            type: 'POST',
+            data: formdata,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.status) {
+                    Swal.fire(
+                        'Success',
+                        'Slider Image Added !',
+                        'success'
+                    )
+                }
+                else {
+                    Swal.fire(
+                        'Server Error',
+                        'Slider Image Not Added',
+                        'error'
+                    )
+                }
+            },
+            error: function () {
+                Swal.fire(
+                    'Server Error',
+                    'Someting Wrong',
+                    'error'
+                )
+            }
+        });
+
+    }
+
+    function BindBannerList() {
+
+        $.ajax({
+            url: '/Slider/BindbannerList',
+            type: 'POST',
+            success: function (data) {
+                $('#TblSliderBody').html('');
+                $(data).each(function (i, item) {
+                    var tr = '';
+                    tr += '<tr>'
+                    tr += '<th>' + (i + 1) + '</th>';
+                    tr += '<th>' + item.content + '</th>';
+                    tr += '<th>' + item.type + '</th>';
+                    tr += '<th>' + item.hiegth + '</th>';
+                    tr += '<th>' + item.width + '</th>';
+                    tr += '<th>' + item.order_type + '</th>';
+                    tr += '<th>' + item.imagestring + '</th>';
+                    tr += '<th><a onclick="Edit(' + item.id + ')"><label class="badge badge-danger"><i class="mdi mdi-tooltip-edit"></i> Edit </label></a></th>';
+                    tr += '</tr>';
+                    $('#TblSliderBody').append(tr);
+                })
+                $('#loader').hide();
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+
+    $(document).ready(function () {
+
+        BindBannerList();
+    })
+
+    function Edit(id) {
+        $.ajax({
+            url: '/Slider/BindBannertById',
+            type: 'POST',
+            data: { Id: id },
+            success: function (data) {
+                $('#DivForm').html(data);
+                $('#imgsld').focus();
+            },
+            error: function () {
+                alert("Error on Edit");
+            }
+        });
+    }
+
+</script>

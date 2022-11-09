@@ -167,5 +167,9 @@ namespace ECommerceStore.Controllers
 
             return PartialView("Newform");
         }
+        public ActionResult Initialreturn()
+        {
+            return PartialView("NewForm");
+        }
     }
 }
