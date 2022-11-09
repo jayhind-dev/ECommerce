@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModel", "..\AdminApi\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminApi", "..\AdminApi\AdminApi\AdminApi.csproj", "{935888FB-E95C-49D1-A095-D0D01316E0AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "newdesh", "C:\Users\hp\Downloads\newdesh\newdesh\newdesh.csproj", "{9389E38A-1DBD-4F5B-94B2-43E279D3D6D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "newdesh", "..\newdesh\newdesh\newdesh.csproj", "{9389E38A-1DBD-4F5B-94B2-43E279D3D6D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
