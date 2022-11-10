@@ -40,113 +40,112 @@
                 if (Model != null)
 
                 {
-                    <input type="hidden" name="id" id="id" />
-
+                    @Html.HiddenFor(model => model.id, new { htmlAttributes = new { @class = "form-control", id = "id", } })
 
                 }
 
                 <input type="hidden" name="image" id="image" />
                 <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>File upload :</label>
-                        <input type="file" name="img" class="file-upload-default" id="imgsld">
-                        <span class="input-group-append">
-                            <div class="input-group col-xs-12">
-                                <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
-                                <button class="file-upload-browse btn btn-primary" type="button"> Upload </button>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>File upload :</label>
+                            <input type="file" name="img" class="file-upload-default" id="imgsld">
+                            <div class="input-group-append">
+                                <div class="input-group col-xs-12">
+                                    <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
+                                    <button class="file-upload-browse btn btn-primary" type="button"> Upload </button>
+                                </div>
                             </div>
-                        </span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Content :</label>
-                        @*<input type="text" class="form-control form-control-sm" placeholder="Content on Image" id="content" name="content">*@
-                        @Html.EditorFor(model => model.content, new { htmlAttributes = new { @class = "form-control form-control-sm", id = "content", } })
-                        @Html.ValidationMessageFor(model => model.img, "", new { @class = "text-danger" })
-                       
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Content :</label>
+                            @*<input type="text" class="form-control form-control-sm" placeholder="Content on Image" id="content" name="content">*@
+                            @Html.EditorFor(model => model.content, new { htmlAttributes = new { @class = "form-control form-control-sm", id = "content", } })
+                            @Html.ValidationMessageFor(model => model.img, "", new { @class = "text-danger" })
+
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Image Type :</label>
-                        @*<select class="form-control" id="type" name="type" required="" Placeholder="Select Type">
-                        <option>Slider</option>
-                        <option>Top Banner</option>
-                        <option>Baner</option>
-                        <option>Bottom Banner</option>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Image Type :</label>
+                            @*<select class="form-control" id="type" name="type" required="" Placeholder="Select Type">
+                            <option>Slider</option>
+                            <option>Top Banner</option>
+                            <option>Baner</option>
+                            <option>Bottom Banner</option>
 
-                    </select>*@
+                        </select>*@
 
-                        <select id="type" class="form-control" name="@Html.NameFor(m => m.type)" Placeholder="Select Type">
+                            <select id="type" class="form-control" name="@Html.NameFor(m => m.type)" Placeholder="Select Type">
 
-                            @{
-                                foreach (SelectListItem item in lst)
-                                {
-                                    if (Model != null)
+                                @{
+                                    foreach (SelectListItem item in lst)
                                     {
-                                        string select = item.Value == Model.id.ToString() ? "Selected=true" : "";
-                                        <option @select value="@item.Value">@item.Text</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
+                                        if (Model != null)
+                                        {
+                                            string select = item.Value == Model.id.ToString() ? "Selected=true" : "";
+                                            <option @select value="@item.Value">@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
                                     }
                                 }
-                            }
-                        </select>
+                            </select>
+                        </div>
                     </div>
-                </div>
                 </div>
                 <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Height :</label>
-                        @*<input type="text" class="form-control form-control-sm" placeholder="Height" id="height" name="hiegth">*@
-                        @Html.EditorFor(model => model.hiegth, new { htmlAttributes = new { @class = "form-control form-control-sm", id = "height", } })
-                        @Html.ValidationMessageFor(model => model.hiegth, "", new { @class = "text-danger" })
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Height :</label>
+                            @*<input type="text" class="form-control form-control-sm" placeholder="Height" id="height" name="hiegth">*@
+                            @Html.EditorFor(model => model.hiegth, new { htmlAttributes = new { @class = "form-control form-control-sm", id = "height", } })
+                            @Html.ValidationMessageFor(model => model.hiegth, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Width :</label>
-                        @*<input type="text" class="form-control form-control-sm" placeholder="Width" id="width" name="Width">*@
-                        @Html.EditorFor(model => model.width, new { htmlAttributes = new { @class = "form-control form-control-sm", id = "width", } })
-                        @Html.ValidationMessageFor(model => model.width, "", new { @class = "text-danger" })
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Width :</label>
+                            @*<input type="text" class="form-control form-control-sm" placeholder="Width" id="width" name="Width">*@
+                            @Html.EditorFor(model => model.width, new { htmlAttributes = new { @class = "form-control form-control-sm", id = "width", } })
+                            @Html.ValidationMessageFor(model => model.width, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Image Order :</label>
-                        @*<select class="form-control" id="order" name="order_type" required="" Placeholder="Select Order">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                    </select>*@
-                        <select id="order" class="form-control" name="@Html.NameFor(m => m.order_type)" Placeholder="Select Order">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Image Order :</label>
+                            @*<select class="form-control" id="order" name="order_type" required="" Placeholder="Select Order">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>*@
+                            <select id="order" class="form-control" name="@Html.NameFor(m => m.order_type)" Placeholder="Select Order">
 
-                            @{
-                                foreach (SelectListItem item in lst02)
-                                {
-                                    if (Model != null)
+                                @{
+                                    foreach (SelectListItem item in lst02)
                                     {
-                                        string select = item.Value == Model.id.ToString() ? "Selected=true" : "";
-                                        <option @select value="@item.Value">@item.Text</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
+                                        if (Model != null)
+                                        {
+                                            string select = item.Value == Model.id.ToString() ? "Selected=true" : "";
+                                            <option @select value="@item.Value">@item.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
                                     }
                                 }
-                            }
-                        </select>
+                            </select>
+                        </div>
                     </div>
-                </div>
                 </div>
             }
         </div>
@@ -181,6 +180,9 @@
                         'Slider Image Added !',
                         'success'
                     )
+                    InitialView()
+                    BindBannerList()
+
                 }
                 else {
                     Swal.fire(
@@ -188,6 +190,7 @@
                         'Slider Image Not Added',
                         'error'
                     )
+                  
                 }
             },
             error: function () {
@@ -242,12 +245,73 @@
             data: { Id: id },
             success: function (data) {
                 $('#DivForm').html(data);
-                $('#imgsld').focus();
+                $('#content').focus();
             },
             error: function () {
                 alert("Error on Edit");
             }
         });
     }
+
+    function Delete() {
+        var id = $("#id").val();
+        Swal.fire({
+            title: 'Do you want to Delete Banner Details?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            denyButtonText: `No`,
+        }).then((result) => {
+            $('#loader').show();
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Slider/DelBannerById",
+                    data: { Id: id },
+                    success: function (customer) {
+                        if (customer != null) {
+                            $('#DivForm').html(customer);
+                            BindBannerList()
+                            Swal.fire(
+                                'Success',
+                                'Banner Details Deleted !',
+                                'success'
+                            )
+                        } else {
+                            $('#loader').hide();
+                            Swal.fire(
+                                'Banner Not Deleted',
+                                'Someting Wrong ',
+                                'error'
+                            )
+                        }
+                    }
+                });
+            } else if (result.isDenied) {
+                $('#loader').hide();
+                Swal.fire(                    'Banner Not Deleted',
+                    'User Reject Delete request',
+                    'error'
+                )
+            }
+
+        })
+
+    }
+
+    function InitialView() {
+        $.ajax({
+            url: '/Slider/Initialreturn',
+            type: 'POST',
+            success: function (data) {
+                $('#DivForm').html(data);
+            },
+            error: function () {
+                alert("Error on Update");
+            }
+        });
+    }
+
 
 </script>

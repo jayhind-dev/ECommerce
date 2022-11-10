@@ -135,5 +135,32 @@ namespace ECommerceStore.Controllers
 
             return PartialView("Form_Slider", obj);
         }
-    } 
+
+        public ActionResult DelBannerById(int Id)
+        {
+            banner obj = new banner();
+            try
+            {
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Banner/BannerDelete?id=" + Id + "");
+                httpWebRequest.Method = "GET";
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                string responseText = string.Empty;
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
+                Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                if (responseResult.status)
+                {
+                }
+            }
+            catch (Exception ex) { }
+
+            return PartialView("Form_Slider");
+        }
+
+        public ActionResult Initialreturn()
+        {
+            return PartialView("Form_Slider");
+        }
+
+
+    }
 }

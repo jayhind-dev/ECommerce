@@ -32,7 +32,7 @@
 
                 @Html.AntiForgeryToken()
                 @*<input type="hidden" name="id" value="@Html.Value(m=>m.id)" id="id" />*@
-                @Html.EditorFor(model => model.id, new { htmlAttributes = new { @class = "form-control", id = "id", @type="hidden"} })
+                @Html.EditorFor(model => model.id, new { htmlAttributes = new { @class = "form-control", id = "id", type="hidden"} })
                 <input type="hidden" name="@Html.NameFor(m => m.imgstring)" id="imgsulr" />
                 <div class="row">
                     <div class="col-md-4">

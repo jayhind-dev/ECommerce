@@ -57,8 +57,8 @@ namespace ECommerceStore.Controllers
                     productapi.price = product.price;
                     productapi.sku = product.sku;
                     productapi.stock = product.stock;
-                    productapi.Multiimgstring = Upload(product.Multiimg);
-                    productapi.Singleimgstring = Upload(product.Singleimg);
+                    //productapi.Multiimgstring = Upload(product.Multiimg);
+                    //productapi.Singleimgstring = Upload(product.Singleimg);
                     productapi.created_by = 2;
                     productapi.created_date = DateTime.Now;
                     productapi.isactive = true;
