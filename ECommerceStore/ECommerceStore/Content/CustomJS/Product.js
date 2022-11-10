@@ -84,7 +84,7 @@ function BindProductList() {
                 tr+='<tr>'
                 tr += '<th>' + (i + 1) + '</th>';
                 tr += '<th>' + item.name + '</th>';
-                tr += '<th>' + item.id+'</th>';
+                tr += '<th>' + item.isactive+'</th>';
                 tr += '<th>' + item.tax_id + '</th>';
                 tr += '<th>' + item.price+'</th>';
                 tr += '<th>' + item.description + '</th>';
@@ -102,20 +102,7 @@ function BindProductList() {
     });
 }
 
-//function BindTypeDDl() {
-//    $.ajax({
-//        url: '/Category/BindTypeDDl',
-//        type: 'POST',
-//        success: function (data) {
-//            $(data).each(function (i, item) {
-//                $('#ddltype').append('<option value="' + item.id + '">' + item.category_name + '</option>');
-//            })
-//        },
-//        error: function () {
-//            alert("error");
-//        }
-//    });
-//}
+
 function Edit(id) {
     $.ajax({
         url: '/Product/BindProductById',
@@ -217,7 +204,8 @@ function categoerychange() {
     $('#loder').hide();
 }
 
-function Delete() { var id = $("#id").val();
+function Delete() {
+ var id = $("#id").val();
     Swal.fire({
         title: 'Do you wCategoryhe Produvt Details?',
         showDenyButton: true,
@@ -254,7 +242,8 @@ function Delete() { var id = $("#id").val();
             });
         } else if (result.isDenied) {
             $('#loader').hide();
-            Swal.fire(                'Product Not Deleted',
+            Swal.fire(
+                'Product Not Deleted',
                 'User Rej ect Delete request',
                 'error'
             )

@@ -37,32 +37,67 @@ namespace ECommerceStore.Controllers
                 {
                     return true;
                 };
-                banner.create_by = 2;
-                banner.create_date = DateTime.Now;
-                banner.updated_by = 3;
-                banner.updated_date= DateTime.Now;
-                banner.isactive = true;
-                banner.isdeleted = false;
-                banner.image = Upload(banner.img);
-                banner.img = null;
-                JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
-                serializerSettings.Converters.Add(new DataTableConverter());
-                string jsonString = JsonConvert.SerializeObject(banner, Formatting.None, serializerSettings);
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Banner/SaveBanner");
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "POST";
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                { streamWriter.Write(jsonString); streamWriter.Flush(); streamWriter.Close(); }
-                string responseText = string.Empty;
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-                Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
-                if (responseResult.status)
+                if (banner.id > 0)
                 {
-                    responseToView.status = true;
-                    responseToView.data = responseResult.data;
+
+                    banner.create_by = 2;
+                    banner.create_date = DateTime.Now;
+                    banner.updated_by = 3;
+                    banner.updated_date = DateTime.Now;
+                    banner.isactive = true;
+                    banner.isdeleted = false;
+                    //banner.image = Upload(banner.img);
+                    banner.img = null;
+                    JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
+                    serializerSettings.Converters.Add(new DataTableConverter());
+                    string jsonString = JsonConvert.SerializeObject(banner, Formatting.None, serializerSettings);
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Banner/BannerUpdate");
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = "POST";
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    { streamWriter.Write(jsonString); streamWriter.Flush(); streamWriter.Close(); }
+                    string responseText = string.Empty;
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
+                    Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                    if (responseResult.status)
+                    {
+                        responseToView.status = true;
+                        responseToView.data = responseResult.data;
+                    }
+
+                    else { responseToView.status = false; responseToView.error = responseResult.error; }
                 }
-                else { responseToView.status = false; responseToView.error = responseResult.error; }
+                else
+                {
+                    banner.create_by = 2;
+                    banner.create_date = DateTime.Now;
+                    banner.updated_by = 3;
+                    banner.updated_date = DateTime.Now;
+                    banner.isactive = true;
+                    banner.isdeleted = false;
+                    banner.image = Upload(banner.img);
+                    banner.img = null;
+                    JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
+                    serializerSettings.Converters.Add(new DataTableConverter());
+                    string jsonString = JsonConvert.SerializeObject(banner, Formatting.None, serializerSettings);
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Banner/SaveBanner");
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = "POST";
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    { streamWriter.Write(jsonString); streamWriter.Flush(); streamWriter.Close(); }
+                    string responseText = string.Empty;
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
+                    Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                    if (responseResult.status)
+                    {
+                        responseToView.status = true;
+                        responseToView.data = responseResult.data;
+                    }
+
+                    else { responseToView.status = false; responseToView.error = responseResult.error; }
+                }
 
             }
 
@@ -159,5 +194,32 @@ namespace ECommerceStore.Controllers
 
             return PartialView("Form_Slider", obj);
         }
-    } 
+
+        public ActionResult DelBannerById(int Id)
+        {
+            banner obj = new banner();
+            try
+            {
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Banner/BannerDelete?id=" + Id + "");
+                httpWebRequest.Method = "GET";
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                string responseText = string.Empty;
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
+                Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                if (responseResult.status)
+                {
+                }
+            }
+            catch (Exception ex) { }
+
+            return PartialView("Form_Slider");
+        }
+
+        public ActionResult Initialreturn()
+        {
+            return PartialView("Form_Slider");
+        }
+
+
+    }
 }
