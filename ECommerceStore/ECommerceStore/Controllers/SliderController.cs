@@ -14,7 +14,10 @@ namespace ECommerceStore.Controllers
 {
     public class SliderController : Controller
     {
-        // GET: Slider
+        #region DECLARATION
+        string apiurl = ConfigurationManager.AppSettings["AdminApiUrl"].ToString();
+        ICommonAPI api = new CommonAPI();
+        #endregion
         public ActionResult Main_View()
         {
             return View();
@@ -31,12 +34,10 @@ namespace ECommerceStore.Controllers
         public JsonResult Save(banner banner)
         {
             Response responseToView = new Response();
+            string url = apiurl + "Banner/SaveBanner";
             try
             {
-                System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) =>
-                {
-                    return true;
-                };
+                
                 banner.create_by = 2;
                 banner.create_date = DateTime.Now;
                 banner.updated_by = 3;
@@ -45,18 +46,7 @@ namespace ECommerceStore.Controllers
                 banner.isdeleted = false;
                 banner.image = Upload(banner.img);
                 banner.img = null;
-                JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
-                serializerSettings.Converters.Add(new DataTableConverter());
-                string jsonString = JsonConvert.SerializeObject(banner, Formatting.None, serializerSettings);
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Banner/SaveBanner");
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "POST";
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                { streamWriter.Write(jsonString); streamWriter.Flush(); streamWriter.Close(); }
-                string responseText = string.Empty;
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-                Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                Response responseResult = api.Post(url, banner);
                 if (responseResult.status)
                 {
                     responseToView.status = true;
@@ -112,19 +102,10 @@ namespace ECommerceStore.Controllers
         public JsonResult BindbannerList()
         {
             List<banner> lst = new List<banner>();
+            string url = apiurl + "Banner/GeltAllBanner";
             try
             {
-                System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) =>
-                {
-                    return true;
-                };
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Banner/GeltAllBanner");
-                httpWebRequest.ContentType = "text/json";
-                httpWebRequest.Method = "GET";
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                string responseText = string.Empty;
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-                Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                Response responseResult = api.Get(url);
                 if (responseResult.status)
                 {
                     lst = JsonConvert.DeserializeObject<List<banner>>(responseResult.data.ToString());
@@ -140,15 +121,10 @@ namespace ECommerceStore.Controllers
         public ActionResult BindBannertById(int Id)
         {
            banner obj = new banner();
+            string url = apiurl + "Banner/BannerEdit?id=" + Id + "";
             try
             {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Banner/BannerEdit?id=" + Id + "");
-                httpWebRequest.ContentType = "text/json";
-                httpWebRequest.Method = "GET";
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                string responseText = string.Empty;
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-                Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                Response responseResult = api.Get(url);
                 if (responseResult.status)
                 {
                     obj = JsonConvert.DeserializeObject<banner>(responseResult.data.ToString());

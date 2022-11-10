@@ -15,8 +15,11 @@ namespace ECommerceStore.Controllers
 {
     public class SubCategoryController : Controller
     {
-       
 
+        #region DECLARATION
+        string apiurl = ConfigurationManager.AppSettings["AdminApiUrl"].ToString();
+        ICommonAPI api = new CommonAPI();
+        #endregion
         public ActionResult MainView()
         {
             return View();
@@ -33,7 +36,8 @@ namespace ECommerceStore.Controllers
         public JsonResult Save(Category category)
         {
             Response responseToView = new Response();
-
+            string saveurl =apiurl+ "Category/Update";
+            string updateurl = apiurl+ "Category/SaveSubCategory";
             try
             {
                 if (category.id > 0)  
@@ -42,18 +46,7 @@ namespace ECommerceStore.Controllers
                     category.update_date = DateTime.Now;
                     category.isactive = true;
                     category.isdeleted = false;
-                    JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
-                    serializerSettings.Converters.Add(new DataTableConverter());
-                    string jsonString = JsonConvert.SerializeObject(category, Formatting.None, serializerSettings);
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/Update");
-                    httpWebRequest.ContentType = "application/json";
-                    httpWebRequest.Method = "POST";
-                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                    { streamWriter.Write(jsonString); streamWriter.Flush(); streamWriter.Close(); }
-                    string responseText = string.Empty;
-                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-                    Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                    Response responseResult = api.Post(updateurl, category);
                     if (responseResult.status)
                     {
                         responseToView.status = true;
@@ -67,18 +60,7 @@ namespace ECommerceStore.Controllers
                     category.created_date = DateTime.Now;
                     category.isactive = true;
                     category.isdeleted = false;
-                    JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
-                    serializerSettings.Converters.Add(new DataTableConverter());
-                    string jsonString = JsonConvert.SerializeObject(category, Formatting.None, serializerSettings);
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/SaveSubCategory");
-                    httpWebRequest.ContentType = "application/json";
-                    httpWebRequest.Method = "POST";
-                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                    { streamWriter.Write(jsonString); streamWriter.Flush(); streamWriter.Close(); }
-                    string responseText = string.Empty;
-                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-                    Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                    Response responseResult = api.Post(saveurl, category);
                     if (responseResult.status)
                     {
                         responseToView.status = true;
@@ -100,19 +82,10 @@ namespace ECommerceStore.Controllers
         public JsonResult BindSubCategoryList()
         {
             List<Category> lst = new List<Category>();
+            string url = apiurl + "Category/GetAllSubCategories";
             try
             {
-                System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) =>
-                {
-                    return true;
-                };
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/GetAllSubCategories");
-                httpWebRequest.ContentType = "text/json";
-                httpWebRequest.Method = "GET";
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                string responseText = string.Empty;
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-                Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                Response responseResult = api.Get(url);
                 if (responseResult.status)
                 {
                     lst = JsonConvert.DeserializeObject<List<Category>>(responseResult.data.ToString());
@@ -127,15 +100,10 @@ namespace ECommerceStore.Controllers
         public ActionResult BindSubCategoryById(int Id)
         {
             Category obj = new Category();
+            string url = apiurl + "Category/Edit?id=" + Id + "";
             try
             {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/Edit?id=" + Id + "");
-                httpWebRequest.ContentType = "text/json";
-                httpWebRequest.Method = "GET";
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                string responseText = string.Empty;
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-                Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                Response responseResult = api.Get(url);
                 if (responseResult.status)
                 {
                     obj = JsonConvert.DeserializeObject<Category>(responseResult.data.ToString());
@@ -150,14 +118,10 @@ namespace ECommerceStore.Controllers
         public ActionResult DelSubCategoryById(int Id)
         {
             Category obj = new Category();
+            string url = apiurl + "Category/Del?id=" + Id + "";
             try
             {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/Del?id=" + Id + "");
-                httpWebRequest.Method = "GET";
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                string responseText = string.Empty;
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-                Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                Response responseResult = api.Get(url);
                 if (responseResult.status)
                 {
                 }
