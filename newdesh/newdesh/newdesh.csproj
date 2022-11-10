@@ -357,11 +357,11 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="F:\IWS_Poonam\ECommerce\AdminApi\SharedModel\SharedModel.csproj">
+    <ProjectReference Include="..\..\AdminApi\SharedModel\SharedModel.csproj">
       <Project>{2beb77f4-5c6d-4621-9748-694046217d9e}</Project>
       <Name>SharedModel</Name>
     </ProjectReference>
-    <ProjectReference Include="F:\IWS_Poonam\ECommerce\ECommerceStore\ECommerceStore\ECommerceStore.csproj">
+    <ProjectReference Include="..\..\ECommerceStore\ECommerceStore\ECommerceStore.csproj">
       <Project>{4609B155-D84E-4C48-96D1-62E35597522C}</Project>
       <Name>ECommerceStore</Name>
     </ProjectReference>
