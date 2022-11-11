@@ -49,6 +49,9 @@ namespace ECommerceStore.Controllers
                     Product productapi = new Product();
                     productapi.id = product.id;
                     productapi.group_id = product.group_id;
+                    productapi.Pro_Category = product.Pro_Category;
+                    productapi.Pro_Type = product.Pro_Type;
+                    productapi.Pro_SubCategory = product.Pro_SubCategory;
                     productapi.Category_id = product.Category_id;
                     productapi.attribute_set_id = product.attribute_set_id;
                     productapi.name = product.name;
@@ -79,6 +82,9 @@ namespace ECommerceStore.Controllers
                     productapi.id = product.id;
                     productapi.group_id = product.group_id;
                     productapi.Category_id = product.Category_id;
+                    productapi.Pro_Category = product.Pro_Category;
+                    productapi.Pro_Type = product.Pro_Type;
+                    productapi.Pro_SubCategory = product.Pro_SubCategory;
                     productapi.attribute_set_id = product.attribute_set_id;
                     productapi.name = product.name;
                     productapi.description = product.description;

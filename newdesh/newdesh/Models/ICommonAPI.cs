@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SharedModel.Models;
 
-namespace SharedModel.Models
+namespace newdesh.Models
 {
     public interface ICommonAPI
     {
