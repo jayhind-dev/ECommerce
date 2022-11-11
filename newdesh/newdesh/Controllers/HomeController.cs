@@ -1,6 +1,6 @@
 ﻿using ECommerceStore.Models;
+using newdesh.Models;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using SharedModel.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,6 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 
@@ -17,7 +16,7 @@ namespace newdesh.Controllers
     public class HomeController : Controller
     {
         #region DECLARATION
-        string apiurl = ConfigurationManager.AppSettings["AdminApiUrl"].ToString();
+        string apiurl = "https://localhost:44368/api";
         ICommonAPI api = new CommonAPI();
         #endregion
         public ActionResult Index()
@@ -87,7 +86,6 @@ namespace newdesh.Controllers
             return Json(GetTypeDDl(), JsonRequestBehavior.AllowGet);
         }
 
-
         public List<SelectListItem> GetCategoryDDl()
         {
             // Api for List
@@ -117,7 +115,6 @@ namespace newdesh.Controllers
             });
             return item;
         }
-
 
         public JsonResult BindAllCategory()
         {
@@ -151,7 +148,6 @@ namespace newdesh.Controllers
             return item;
         }
 
-       
         public JsonResult BindAllSubCategory()
         {
             return Json(GetSubCategoryDDl(), JsonRequestBehavior.AllowGet);
@@ -188,6 +184,42 @@ namespace newdesh.Controllers
 
             return Json(nam, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public ActionResult GetAllProductbySubCat_id(string Id)
+        {
+            List<Product> lst = new List<Product>();
+            try {
+                System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) =>
+                {
+                    return true;
+                };
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Product/GetAllProducts");
+                httpWebRequest.ContentType = "text/json";
+                httpWebRequest.Method = "GET";
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                string responseText = string.Empty;
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
+                Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                if (responseResult.status)
+                {
+                    lst = JsonConvert.DeserializeObject<List<Product>>(responseResult.data.ToString());
+                }
+                
+            lst = lst.Where(x => x.Pro_SubCategory == Int64.Parse(Id)).ToList();
+            }
+
+            catch (Exception ex)
+            { }
+            return PartialView("Product_Partial", lst);
+        }
+        public ActionResult Product_Partial()
+        {
+            return View();
+        }
+
+
+
     }
 }
 

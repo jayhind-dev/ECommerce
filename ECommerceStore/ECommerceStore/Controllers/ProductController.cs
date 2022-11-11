@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
 using ECommerceStore.Models;
@@ -15,9 +16,10 @@ namespace ECommerceStore.Controllers
 {
     public class ProductController : Controller
     {
-       
-
-        // GET: Product
+        #region DECLARATION
+        string apiurl = ConfigurationManager.AppSettings["AdminApiUrl"].ToString();
+        ICommonAPI api = new CommonAPI();
+        #endregion
         public ActionResult MainView()
         {
             return View();
@@ -34,6 +36,8 @@ namespace ECommerceStore.Controllers
         public JsonResult Save(VMProduct product)
         {
             Response responseToView = new Response();
+            string updateurl = apiurl + "Product/Update";
+            string saveurl = apiurl + "Product/SaveProduct";
             try
             {
                 ViewBag.product = product;
@@ -45,6 +49,9 @@ namespace ECommerceStore.Controllers
                     Product productapi = new Product();
                     productapi.id = product.id;
                     productapi.group_id = product.group_id;
+                    productapi.Pro_Category = product.Pro_Category;
+                    productapi.Pro_Type = product.Pro_Type;
+                    productapi.Pro_SubCategory = product.Pro_SubCategory;
                     productapi.Category_id = product.Category_id;
                     productapi.attribute_set_id = product.attribute_set_id;
                     productapi.name = product.name;
@@ -59,18 +66,7 @@ namespace ECommerceStore.Controllers
                     productapi.created_date = DateTime.Now;
                     productapi.isactive = true;
                     productapi.isdeleted = false;
-                    JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
-                    serializerSettings.Converters.Add(new DataTableConverter());
-                    string jsonString = JsonConvert.SerializeObject(productapi, Formatting.None, serializerSettings);
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Product/Update");
-                    httpWebRequest.ContentType = "application/json";
-                    httpWebRequest.Method = "POST";
-                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                    { streamWriter.Write(jsonString); streamWriter.Flush(); streamWriter.Close(); }
-                    string responseText = string.Empty;
-                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-                    Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                    Response responseResult = api.Post(updateurl, product);
                     if (responseResult.status)
                     {
                         responseToView.status = true;
@@ -86,6 +82,9 @@ namespace ECommerceStore.Controllers
                     productapi.id = product.id;
                     productapi.group_id = product.group_id;
                     productapi.Category_id = product.Category_id;
+                    productapi.Pro_Category = product.Pro_Category;
+                    productapi.Pro_Type = product.Pro_Type;
+                    productapi.Pro_SubCategory = product.Pro_SubCategory;
                     productapi.attribute_set_id = product.attribute_set_id;
                     productapi.name = product.name;
                     productapi.description = product.description;
@@ -99,18 +98,7 @@ namespace ECommerceStore.Controllers
                     productapi.created_date = DateTime.Now;
                     productapi.isactive = true;
                     productapi.isdeleted = false;
-                    JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
-                    serializerSettings.Converters.Add(new DataTableConverter());
-                    string jsonString = JsonConvert.SerializeObject(productapi, Formatting.None, serializerSettings);
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Product/SaveProduct");
-                    httpWebRequest.ContentType = "application/json";
-                    httpWebRequest.Method = "POST";
-                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                    { streamWriter.Write(jsonString); streamWriter.Flush(); streamWriter.Close(); }
-                    string responseText = string.Empty;
-                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-                    Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                  Response responseResult = api.Post(saveurl, product);
                     if (responseResult.status)
                     {
                         responseToView.status = true;
@@ -185,17 +173,8 @@ namespace ECommerceStore.Controllers
         public JsonResult BindCategriesbytypeid(int Id)
         {
             List<Category> lst = new List<Category>();
-            System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) =>
-            {
-                return true;
-            };
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/GeltAllCategories");
-            httpWebRequest.ContentType = "text/json";
-            httpWebRequest.Method = "GET";
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            string responseText = string.Empty;
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-            Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+            string url = apiurl + "Category/GeltAllCategories";
+            Response responseResult = api.Get(url);
             if (responseResult.status)
             {
                 lst = JsonConvert.DeserializeObject<List<Category>>(responseResult.data.ToString());
@@ -206,17 +185,8 @@ namespace ECommerceStore.Controllers
         public JsonResult BindSubCategriesbytypeid(int Id)
         {
             List<Category> lst = new List<Category>();
-            System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) =>
-            {
-                return true;
-            };
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Category/GetAllSubCategories");
-            httpWebRequest.ContentType = "text/json";
-            httpWebRequest.Method = "GET";
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            string responseText = string.Empty;
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-            Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+            string url = apiurl + "Category/GetAllSubCategories";
+            Response responseResult = api.Get(url);
             if (responseResult.status)
             {
                 lst = JsonConvert.DeserializeObject<List<Category>>(responseResult.data.ToString());
@@ -265,14 +235,10 @@ namespace ECommerceStore.Controllers
         public ActionResult DelProductById(int Id)
         {
             Product obj = new Product();
+            string url = apiurl + "Product/Delete?id=" + Id + "";
             try
             {
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["AdminApiUrl"].ToString() + "Product/Delete?id=" + Id + "");
-                httpWebRequest.Method = "GET";
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                string responseText = string.Empty;
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
-                Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
+                Response responseResult = api.Get(url);
                 if (responseResult.status)
                 {
                 }

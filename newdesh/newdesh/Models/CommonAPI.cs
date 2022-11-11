@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SharedModel.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,16 +10,12 @@ using System.Net;
 using System.Web;
 using System.Xml;
 
-namespace SharedModel.Models
+namespace newdesh.Models
 {
     public class CommonAPI : ICommonAPI
     {
         public Response Get(string url)
         {
-            System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) =>
-            {
-                return true;
-            };
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
             httpWebRequest.ContentType = "text/json";
             httpWebRequest.Method = "GET";
@@ -28,12 +25,9 @@ namespace SharedModel.Models
             Response responseResult = JsonConvert.DeserializeObject<Response>(responseText);
             return responseResult;
         }
+
         public Response Post(string url, object data)
         {
-            System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) =>
-            {
-                return true;
-            };
             JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
             serializerSettings.Converters.Add(new DataTableConverter());
             string jsonString = JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.None, serializerSettings);

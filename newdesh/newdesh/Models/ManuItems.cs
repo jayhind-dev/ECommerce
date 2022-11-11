@@ -21,6 +21,11 @@ namespace newdesh.Models
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://localhost:44368/api/Category/GetAllTypeCategories");
             httpWebRequest.ContentType = "text/json";
             httpWebRequest.Method = "GET";
+
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) =>
+            {
+                return true;
+            };
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
             string responseText = string.Empty;
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream())) { responseText = streamReader.ReadToEnd(); }
