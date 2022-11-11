@@ -12,7 +12,10 @@ namespace SharedModel.Models
         public int id { get; set; }
         public int group_id { get; set; }
         public int Category_id { get; set; }
-                public int attribute_set_id { get; set; }
+        public int Pro_Type { get; set; }
+        public int Pro_Category { get; set; }
+        public int Pro_SubCategory { get; set; }
+        public int attribute_set_id { get; set; }
         public string name { get; set; }
         public string description { get; set; }
         public int tax_id { get; set; }
