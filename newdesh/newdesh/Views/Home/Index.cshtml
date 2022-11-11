@@ -4,6 +4,12 @@
 @{
     ViewBag.Title = "Home Page";
 }
+<script>
+    function Otp() {
+        $("#otpdiv").show();
+        $("#singupdiv").hide();
+    }
+</script>
 <div class="border-bottom pb-lg-4 pb-3">
 
 
@@ -11,9 +17,9 @@
     @{ Html.RenderPartial("/Views/Shared/_MenuItems.cshtml");}
 </div>
 <!-- Modal -->
-<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content p-4">
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" >
+        <div class="modal-content p-4" id="singupdiv">
             <div class="modal-header border-0">
                 <h5 class="modal-title fs-3 fw-bold" id="userModalLabel"> Sign Up</h5>
 
@@ -25,7 +31,6 @@
                         <label for="fullName" class="form-label">Name</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Enter Your Name" required="">
                     </div>
-
                     <div class="mb-3">
                         <label for="fullName" class="form-label">Number</label>
                         <input type="number" class="form-control" id="number" name="mobile" placeholder="Enter Your Number" required="">
@@ -42,8 +47,8 @@
                             By Signup, you agree to our <a href="#!">Terms of Service</a> & <a href="#!">Privacy Policy</a>
                         </small>
                     </div>
-
-                    <button type="submit" class="btn btn-primary" onclick="signup()">Sign Up</button>
+                    @*<button type="submit" class="btn btn-primary" onclick="signup()">Sign Up</button>*@
+                    <input type="button" class="btn btn-primary" onclick="signup()" value=" Sign Up" />
                 </form>
             </div>
             <div class="modal-footer border-0 justify-content-center">
@@ -51,6 +56,28 @@
                 Already have an account? <a href="/home/Signin">Sign in</a>
             </div>
         </div>
+    
+    @*OTP*@
+    
+    <div class="modal-content p-4" style="display:none;" id="otpdiv">
+        <div class="modal-header border-0">
+            <h5 class="modal-title fs-3 fw-bold" id="userModalLabel"> OTP Verification</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="mb-3">
+                    <label for="fullName" class="form-label">OTP</label>
+                    <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter Your Name" required="">
+                </div>
+                <button type="submit" class="btn btn-primary" onclick="">Verify</button>
+            </form>
+        </div>
+        @*<div class="modal-footer border-0 justify-content-center">
+
+            Already have an account? <a href="/home/Signin">Login in</a>
+        </div>*@
+    </div>
     </div>
 </div>
 
@@ -1749,39 +1776,37 @@
     </div>
 </div>
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/sweetalert2@11.js"></script>
 <script>
-   
-   
+
+
     function AddToCart(id) {
         $.ajax({
             url: '/Home/AddToCart',
             type: 'POST',
-            data: {Id:id},
-                success: function (success) {
-                    alert(success);
-        },
-        error: function () {
-            alert("error");
-        }
-    });
-                }
+            data: { Id: id },
+            success: function (success) {
+                alert(success);
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
 </script>
+
 <script>
     function signup() {
         var formdata = new FormData();
         formdata = $('form').serialize();
+        debugger;
         $.ajax({
             url: '/Home/SignUpData',
             type: 'POST',
             data: formdata,
             success: function (data) {
                 if (data.status) {
-                    Swal.fire(
-                        'Success',
-                        'Sign Up  !',
-                        'success'
-                    )
-
+                    Otp();
                 }
                 else {
                     Swal.fire(
