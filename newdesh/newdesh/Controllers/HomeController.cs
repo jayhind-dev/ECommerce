@@ -11,6 +11,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace newdesh.Controllers
 {
     public class HomeController : Controller
@@ -21,6 +22,7 @@ namespace newdesh.Controllers
         #endregion
         public ActionResult Index()
         {
+            GeneretOTP generetOTP = new GeneretOTP();
             return View();
         }
 
@@ -160,6 +162,9 @@ namespace newdesh.Controllers
             Response responseToView = new Response();
             try
             {
+                Random rand = new Random();
+                int OTP = rand.Next(1000, 9999);
+                Session["OTP"] = OTP;
                 string url = apiurl + "/User/SaveUserDetails";
                 Response responseResult = api.Post(url, user);
                     if (responseResult.status)
@@ -183,7 +188,6 @@ namespace newdesh.Controllers
 
             return Json(nam, JsonRequestBehavior.AllowGet);
         }
-
     }
 }
 

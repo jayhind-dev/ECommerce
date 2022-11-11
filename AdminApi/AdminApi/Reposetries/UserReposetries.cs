@@ -57,9 +57,9 @@ namespace AdminApi.Reposetries
             return lst;
         }
 
-        public bool SaveUserDetails(User user)
+        public List<User> SaveUserDetails(User user)
         {
-            bool n = false;
+            List<User> n = new List<User>();
             SqlParameter[] param = new SqlParameter[]
             {
                     new SqlParameter("@user_id",user.user_id),
@@ -73,14 +73,13 @@ namespace AdminApi.Reposetries
                     new SqlParameter("@remember_token",user.remember_token),
                     new SqlParameter("@isactive",user.isactive),
                     new SqlParameter("@isdeleted",user.isdeleted),
-                    new SqlParameter("@update_by",user.update_by),
-                    new SqlParameter("@update_date",user.update_date),
                     new SqlParameter("@created_by",user.created_by),
                     new SqlParameter("@created_date",user.created_date),
                     new SqlParameter("@Action",UserAction.insert),
             };
-            int res = dataAccess.ExecuteNonQueryProc(SPKeys.p_userInfo, param);
-            n = res > 0 ? true : false;
+            DataTable dt = dataAccess.ExecProcDataTable(SPKeys.p_userInfo, param);
+            n = com.ConvertDataTable<User>(dt);
+           
             return n;
         }
 

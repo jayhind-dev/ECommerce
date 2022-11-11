@@ -20,11 +20,12 @@ namespace AdminApi.Controllers
             Response response = new Response();
             try
             {
-                bool n = repo.SaveUserDetails(user);
-                if (n)
+                List<User> userdetails = new List<User>();
+                userdetails = repo.SaveUserDetails(user);
+                if (user!=null)
                 {
                     response.status = true;
-                    response.data = n;
+                    response.data = user;
                 }
                 else
                 {

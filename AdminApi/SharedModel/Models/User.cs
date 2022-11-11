@@ -14,7 +14,7 @@ namespace SharedModel.Models
         public string email { get; set; }
         public string password { get; set; }
         public double mobile { get; set; }
-        public DateTime dob { get; set; }
+        public DateTime? dob { get; set; }
         public string gender { get; set; }
         public string remember_token { get; set; }
         public int created_by { get; set; }

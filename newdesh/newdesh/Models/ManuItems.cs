@@ -13,6 +13,10 @@ namespace newdesh.Models
     {
         public List<Category> GetMenuType()
         {
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = (senderX, certificate, chain, sslPolicyErrors) =>
+            {
+                return true;
+            };
             List<Category> lst = new List<Category>();
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://localhost:44368/api/Category/GetAllTypeCategories");
             httpWebRequest.ContentType = "text/json";

@@ -9,7 +9,7 @@ namespace AdminApi.Reposetries
 {
     public interface IUserReposetries
     {
-        bool SaveUserDetails(User user);
+        List<User> SaveUserDetails(User user);
         List<User> GeltAllUserDetails();
         bool Update(User user);
         User Edit(int user_id);
